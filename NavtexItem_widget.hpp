@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class QLabel;
+class QVBoxLayout;
 
 class NavtexItem_Widget : public QWidget
 {
@@ -17,6 +18,7 @@ private:
     QLabel *label_id;
     QLabel *label_type;
     QLabel *label_band;
+    QVBoxLayout *layout;
 
 signals:
 

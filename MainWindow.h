@@ -26,7 +26,8 @@ private:
 
     QVBoxLayout *layout_left;
     QHBoxLayout *layout_left_top;
-    QVBoxLayout *layout_left_bottom;
+    //QVBoxLayout *layout_left_bottom;
+    FlowLayout *layout_left_bottom;
 
 signals:
 

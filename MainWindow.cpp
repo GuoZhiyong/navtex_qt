@@ -2,6 +2,7 @@
 
 #include "FlowLayout.hpp"
 
+#include "NavtexItem_widget.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
@@ -36,19 +37,32 @@ MainWindow::MainWindow(QWidget *parent) :
     layout_left_top = new QHBoxLayout;
     layout_left_top->addWidget(title);
 
-    QListWidget* list = new QListWidget;
-    list->addItem("foo");
+//    QListWidget* list = new QListWidget;
+//    list->addItem("foo");
 
-    QListWidgetItem* item;
-    item = new QListWidgetItem(list);
-    list->addItem(item);
-    QPushButton* button = new QPushButton("hey");
-    item->setSizeHint(button->minimumSizeHint());
-    list->setItemWidget(item, button);
-    list->addItem("bar");
+//    QListWidgetItem* item;
+//    item = new QListWidgetItem(list);
+//    list->addItem(item);
+//    QPushButton* button = new QPushButton("hey");
+//    item->setSizeHint(button->minimumSizeHint());
+//    list->setItemWidget(item, button);
+//    list->addItem("bar");
+font.setPointSize(24);
+setFont(font);
+    NavtexItem_Widget *item1=new NavtexItem_Widget;
+NavtexItem_Widget *item2=new NavtexItem_Widget;
+NavtexItem_Widget *item3=new NavtexItem_Widget;
+NavtexItem_Widget *item4=new NavtexItem_Widget;
+NavtexItem_Widget *item5=new NavtexItem_Widget;
 
-    layout_left_bottom = new QVBoxLayout;
-    layout_left_bottom->addWidget(list);
+//    layout_left_bottom = new QVBoxLayout;
+//    layout_left_bottom->addWidget(list);
+    layout_left_bottom = new FlowLayout;
+    layout_left_bottom->addWidget(item1);
+    layout_left_bottom->addWidget(item2);
+    layout_left_bottom->addWidget(item3);
+    layout_left_bottom->addWidget(item4);
+    layout_left_bottom->addWidget(item5);
 
     layout_main =new QGridLayout;
 
@@ -57,6 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
     layout_main->addLayout(layout_right,0,9,10,1,0);
 
     setLayout(layout_main);
+   // this->setWindowFlags(Qt::FramelessWindowHint); //
     setWindowTitle(tr("Navtex测试"));
+    qDebug()<<"this is a test";
 
 }
