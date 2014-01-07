@@ -9,9 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     QFont font;
     font.setFamily(QString::fromUtf8("\345\256\213\344\275\223"));
-    font.setPointSize(24);
-    setFont(font);
-
     btn_detail = new QPushButton(tr("详情"));
     btn_486KHz = new QPushButton("486KHz");
     btn_518KHz = new QPushButton("518KHz");
@@ -37,26 +34,15 @@ MainWindow::MainWindow(QWidget *parent) :
     layout_left_top = new QHBoxLayout;
     layout_left_top->addWidget(title);
 
-//    QListWidget* list = new QListWidget;
-//    list->addItem("foo");
-
-//    QListWidgetItem* item;
-//    item = new QListWidgetItem(list);
-//    list->addItem(item);
-//    QPushButton* button = new QPushButton("hey");
-//    item->setSizeHint(button->minimumSizeHint());
-//    list->setItemWidget(item, button);
-//    list->addItem("bar");
-font.setPointSize(24);
-setFont(font);
+    font.setPointSize(24);
+    setFont(font);
     NavtexItem_Widget *item1=new NavtexItem_Widget;
-NavtexItem_Widget *item2=new NavtexItem_Widget;
-NavtexItem_Widget *item3=new NavtexItem_Widget;
-NavtexItem_Widget *item4=new NavtexItem_Widget;
-NavtexItem_Widget *item5=new NavtexItem_Widget;
+    NavtexItem_Widget *item2=new NavtexItem_Widget;
+    NavtexItem_Widget *item3=new NavtexItem_Widget;
+    NavtexItem_Widget *item4=new NavtexItem_Widget;
+    NavtexItem_Widget *item5=new NavtexItem_Widget;
 
-//    layout_left_bottom = new QVBoxLayout;
-//    layout_left_bottom->addWidget(list);
+
     layout_left_bottom = new FlowLayout;
     layout_left_bottom->addWidget(item1);
     layout_left_bottom->addWidget(item2);
