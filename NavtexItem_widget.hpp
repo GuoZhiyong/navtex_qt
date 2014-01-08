@@ -7,6 +7,7 @@ class QLabel;
 class QGridLayout;
 class QLCDNumber;
 class QPushButton;
+class QTextEdit;
 
 class NavtexItem_Widget : public QWidget
 {
@@ -21,6 +22,7 @@ private:
     QLabel *label_id;   //B1B2B3B4
     QPushButton *btn_view;  //view status
     QPushButton *btn_tts; // TTS button
+    QTextEdit *txt_info;
     QGridLayout *layout;
 
 signals:
