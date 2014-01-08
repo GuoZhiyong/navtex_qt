@@ -4,7 +4,9 @@
 #include <QWidget>
 
 class QLabel;
-class QVBoxLayout;
+class QGridLayout;
+class QLCDNumber;
+class QPushButton;
 
 class NavtexItem_Widget : public QWidget
 {
@@ -13,12 +15,13 @@ public:
     explicit NavtexItem_Widget(QWidget *parent = 0);
 
 private:
-    QLabel *label_1 ;
-    QLabel *label_2;
-    QLabel *label_id;
-    QLabel *label_type;
-    QLabel *label_band;
-    QVBoxLayout *layout;
+    QLCDNumber *lcdnumber_freq; //freq band
+    QLabel *label_1;    //receive time
+    QLabel *label_2;    //broad time
+    QLabel *label_id;   //B1B2B3B4
+    QPushButton *btn_view;  //view status
+    QPushButton *btn_tts; // TTS button
+    QGridLayout *layout;
 
 signals:
 
