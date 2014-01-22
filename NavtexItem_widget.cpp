@@ -1,12 +1,13 @@
-#include "NavtexItem_widget.hpp"
+﻿#include "NavtexItem_widget.hpp"
 #include <QtGui>
 
 
 NavtexItem_Widget::NavtexItem_Widget(QWidget *parent) :
     QWidget(parent)
 {
-
-    //font.setFamily(QString::fromUtf8("\345\256\213\344\275\223"));
+//    QFont font;
+//    font.setFamily(QString::fromUtf8("\345\256\213\344\275\223"));
+    //setFont(font);
     lcdnumber_freq=new QLCDNumber;
     lcdnumber_freq->display(485);
 
@@ -22,7 +23,7 @@ NavtexItem_Widget::NavtexItem_Widget(QWidget *parent) :
     btn_tts=new QPushButton("TTS");
     btn_tts->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);
 
-    txt_info =  new QTextEdit("请问");
+    txt_info =  new QTextEdit(("请问"));
     txt_info->setFrameShape(QFrame::Box);
 
     layout= new QGridLayout;
@@ -43,7 +44,7 @@ NavtexItem_Widget::NavtexItem_Widget(QWidget *parent) :
     pal.setBrush(backgroundRole(),QColor(10,25,69));
     this->setPalette(pal);
 
-    this->setStyleSheet("color:yellow");
+    this->setStyleSheet("color:red");
     this->setLayout(layout);
     this->setFixedSize(210,160);
 
