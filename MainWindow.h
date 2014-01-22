@@ -23,10 +23,11 @@ private:
     QSpacerItem *spacer;
     QVBoxLayout *layout_right;
     QGridLayout *layout_main;
+    QWidget     *scrollarea_widget;
+    QScrollArea *scrollarea;
 
     QVBoxLayout *layout_left;
     QHBoxLayout *layout_left_top;
-    //QVBoxLayout *layout_left_bottom;
     FlowLayout *layout_left_bottom;
 
 signals:
