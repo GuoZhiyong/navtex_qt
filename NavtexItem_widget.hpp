@@ -16,7 +16,7 @@ public:
     explicit NavtexItem_Widget(QWidget *parent = 0);
 
 private:
-    QLCDNumber *lcdnumber_freq; //freq band
+    QLabel *label_freq; //freq band
     QLabel *label_1;    //receive time
     QLabel *label_2;    //broad time
     QLabel *label_id;   //B1B2B3B4
