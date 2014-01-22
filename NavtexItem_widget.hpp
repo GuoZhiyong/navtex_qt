@@ -1,4 +1,4 @@
-#ifndef NAVTEXITEM_WIDGET_H
+﻿#ifndef NAVTEXITEM_WIDGET_H
 #define NAVTEXITEM_WIDGET_H
 
 #include <QWidget>
@@ -16,10 +16,13 @@ public:
     explicit NavtexItem_Widget(QWidget *parent = 0);
 
 private:
-    QLabel *label_freq; //freq band
-    QLabel *label_1;    //receive time
-    QLabel *label_2;    //broad time
-    QLabel *label_id;   //B1B2B3B4
+    QPushButton *btn_status;
+    QLabel *lbl_freq; //freq band
+    QLabel *lbl_rx;    //receive time
+    QLabel *lbl_rx_time;
+    QLabel *lbl_tx_time;
+    QLabel *lbl_tx;    //broad time
+    QLabel *lbl_id;   //B1B2B3B4
     QPushButton *btn_view;  //view status
     QPushButton *btn_tts; // TTS button
     QTextEdit *txt_info;
