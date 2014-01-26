@@ -30,7 +30,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="btn_pnl_info">
      <property name="font">
       <font>
        <pointsize>14</pointsize>
@@ -121,7 +121,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="btn_pnl_setup">
      <property name="font">
       <font>
        <pointsize>14</pointsize>
@@ -133,7 +133,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="btn_pnl_about">
      <property name="font">
       <font>
        <pointsize>14</pointsize>

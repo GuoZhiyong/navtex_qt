@@ -4,19 +4,19 @@
 #include <QWidget>
 
 namespace Ui {
-class serial_panel;
+class panel_serial;
 }
 
-class serial_panel : public QWidget
+class panel_serial : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit serial_panel(QWidget *parent = 0);
-    ~serial_panel();
+    explicit panel_serial(QWidget *parent = 0);
+    ~panel_serial();
     
 private:
-    Ui::serial_panel *ui;
+    Ui::panel_serial *ui;
 };
 
 #endif // SERIAL_PANEL_H
