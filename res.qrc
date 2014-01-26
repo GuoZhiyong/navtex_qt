@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>res/bg1.png</file>
+        <file>res/mail_1_close.png</file>
+        <file>res/mail_1_open.png</file>
+        <file>res/spk_blue_off.png</file>
+        <file>res/spk_blue_on.png</file>
     </qresource>
 </RCC>
