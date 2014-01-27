@@ -22,6 +22,10 @@ private slots:
 
     void on_btn_pnl_info_clicked();
 
+    void on_btn_pnl_serialport_clicked();
+
+    void on_btn_pnl_detail_clicked();
+
 private:
     Ui::control_panel *ui;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>setup_panel</class>
- <widget class="QWidget" name="setup_panel">
+ <class>panel_setup</class>
+ <widget class="QWidget" name="panel_setup">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>这是测试页</string>
+      <string>这是设置页</string>
      </property>
     </widget>
    </item>
