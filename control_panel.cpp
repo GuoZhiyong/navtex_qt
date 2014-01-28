@@ -13,7 +13,7 @@ control_panel::~control_panel()
     delete ui;
 }
 
-//¸ù¾İÌí¼ÓÒ³ÃæµÄË³Ğòµ÷Õû
+//æ ¹æ®æ·»åŠ é¡µé¢çš„é¡ºåºè°ƒæ•´
 
 void control_panel::on_btn_pnl_info_clicked()
 {

@@ -25,7 +25,7 @@ panel_serial::panel_serial(QWidget *parent) :
     }
     else
     {
-        qDebug("´®¿Ú´ò¿ªÊ§°Ü");
+        qDebug(("ä¸²å£æ‰“å¼€å¤±è´¥"));
     }
 
 }
