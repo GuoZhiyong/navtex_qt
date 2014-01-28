@@ -8,7 +8,6 @@ SOURCES += \
     panel_about.cpp \
     panel_serial.cpp \
     panel_item.cpp \
-    myserialport.cpp \
     panel_setup.cpp \
     panel_detail.cpp
 
@@ -19,7 +18,6 @@ HEADERS += \
     panel_about.h \
     panel_serial.h \
     panel_item.h \
-    myserialport.h \
     panel_setup.h \
     panel_detail.h
 

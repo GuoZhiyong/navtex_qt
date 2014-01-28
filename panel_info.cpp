@@ -4,6 +4,8 @@
 
 #include "panel_item.h"
 
+#include <QDebug>
+
 panel_info::panel_info(QWidget *parent) :
     QScrollArea(parent),
     ui(new Ui::panel_info)
@@ -26,3 +28,12 @@ panel_info::~panel_info()
 {
     delete ui;
 }
+
+void panel_info::serialport_rx(QByteArray bytes)
+{
+    qDebug()<<"panel_info rx:"<<bytes.size();
+    qDebug()<<"bytes:"<<bytes;
+
+}
+
+

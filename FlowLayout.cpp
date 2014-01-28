@@ -23,7 +23,8 @@ FlowLayout::~FlowLayout()
 
 void FlowLayout::addItem(QLayoutItem *item)
 {
-    itemList.append(item);
+   // itemList.append(item);
+    itemList.prepend(item);  //insert to first position
 }
 
 int FlowLayout::horizontalSpacing() const

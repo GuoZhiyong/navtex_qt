@@ -15,6 +15,9 @@ public:
     explicit panel_info(QWidget *parent = 0);
     ~panel_info();
 
+public slots:
+    void serialport_rx(QByteArray bytes);
+
 private:
     Ui::panel_info *ui;
 };
