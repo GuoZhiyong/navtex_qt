@@ -7,13 +7,13 @@ panel_item::panel_item(NAVTEXITEM *item, QWidget *parent) :
     itemvalue=item;
 
     lbl_time_broadcast = new QLabel(item->Broadcast);
-    lbl_time_broadcast->setFont(QFont("simsun",12));
+    lbl_time_broadcast->setFont(QFont("wenquanyi micro hei mono",12));
 
     lbl_time_receive = new QLabel(item->Receive);
-    lbl_time_receive->setFont(QFont("simsun",12));
+    lbl_time_receive->setFont(QFont("wenquanyi micro hei mono",12));
 
     lbl_code = new QLabel(item->code);
-    lbl_code->setFont(QFont("wenquanyi micro hei mono",24,QFont::Bold));
+    lbl_code->setFont(QFont("wenquanyi micro hei mono",22,QFont::Bold));
 
     vlayout = new QVBoxLayout();
     hlayout = new QHBoxLayout;

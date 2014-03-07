@@ -21,7 +21,7 @@ panel_info::panel_info(QWidget *parent) :
 
     QString style = "QScrollBar:vertical {min-width: 30px;}";
     setStyleSheet(style);
-    FlowLayout *layout=new FlowLayout(0,10,0);
+    FlowLayout *layout=new FlowLayout(0,5,0);
 /*打开数据库*/
     dbconn=QSqlDatabase::addDatabase("QSQLITE");
     dbconn.setDatabaseName("Informationdb.db");

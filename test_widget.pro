@@ -30,8 +30,6 @@ RESOURCES += \
     res.qrc
 
 FORMS += \
-    navtex_item.ui \
-    listwidget_item.ui \
     control_panel.ui \
     panel_info.ui \
     panel_about.ui \

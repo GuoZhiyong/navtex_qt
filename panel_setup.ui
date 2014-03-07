@@ -7,21 +7,25 @@
     <x>0</x>
     <y>0</y>
     <width>507</width>
-    <height>387</height>
+    <height>559</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>这是设置页</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>250</y>
+     <width>489</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>GroupBox</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
