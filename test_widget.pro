@@ -1,5 +1,9 @@
 include(3rdparty/qextserialport/src/qextserialport.pri)
 
+QT+=sql
+
+CONFIG += qtestlib
+
 SOURCES += \
     main.cpp \
     FlowLayout.cpp \
@@ -19,7 +23,8 @@ HEADERS += \
     panel_serial.h \
     panel_item.h \
     panel_setup.h \
-    panel_detail.h
+    panel_detail.h \
+    main.h
 
 RESOURCES += \
     res.qrc

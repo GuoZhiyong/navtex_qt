@@ -2,11 +2,14 @@
 #define SERIAL_PANEL_H
 
 #include <QWidget>
-//#include "myserialport.h"
 
-#include "qextserialport.h"
+
+//#include "qextserialport.h"
+
+class QextSerialPort;
 
 namespace Ui {
+
 class panel_serial;
 }
 
@@ -17,8 +20,10 @@ class panel_serial : public QWidget
 public:
     explicit panel_serial(QWidget *parent = 0);
     ~panel_serial();
+
 signals:
     void signal_serialport_rx(QByteArray bytes); /*define a signal to send message*/
+
 private slots:
     void on_btn_serialport_send_clicked();
     void onReadyRead();

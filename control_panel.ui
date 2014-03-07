@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>138</width>
-    <height>430</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,25 +93,48 @@
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QCheckBox" name="cb_486">
+       <widget class="QRadioButton" name="cb_486">
+        <property name="font">
+         <font>
+          <family>WenQuanYi Micro Hei</family>
+         </font>
+        </property>
         <property name="text">
          <string>486kHz</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="cb_518">
+       <widget class="QRadioButton" name="cb_518">
+        <property name="font">
+         <font>
+          <family>WenQuanYi Micro Hei</family>
+         </font>
+        </property>
         <property name="text">
          <string>518kHz</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="cb_4209">
+       <widget class="QRadioButton" name="cb_4209">
         <property name="text">
          <string>4209kHz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton">
+        <property name="text">
+         <string>全部</string>
         </property>
        </widget>
       </item>

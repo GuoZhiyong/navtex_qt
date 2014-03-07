@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "panel_info.h"
+
 namespace Ui {
 class panel_detail;
 }
@@ -13,6 +15,7 @@ class panel_detail : public QWidget
     
 public:
     explicit panel_detail(QWidget *parent = 0);
+    void setcontent(NAVTEXITEM *item);
     ~panel_detail();
     
 private:
