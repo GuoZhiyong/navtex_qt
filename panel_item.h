@@ -18,15 +18,17 @@ class panel_item : public QWidget
     
 public:
     explicit panel_item(QWidget *parent = 0);
-    explicit panel_item(NAVTEXITEM *item,QWidget *parent = 0);
+    explicit panel_item(int i,NAVTEXITEM *item,QWidget *parent = 0);
     ~panel_item();
 
 signals:
     void viewClick(NAVTEXITEM *itemvalue); //按下view发送的信号，也可同tts一同发送
     void ttsClick(NAVTEXITEM *itemvalue);
-    
+protected:
+    void paintEvent(QPaintEvent *event);//重绘事件处理
+
 private:
-    int id;                 //对应数据库的id,用来传递参数
+    int index;                 //自己添加的id,对应Qlist的index；
     QLabel *lbl_time_broadcast;
     QLabel *lbl_time_receive;
     QLabel *lbl_code;

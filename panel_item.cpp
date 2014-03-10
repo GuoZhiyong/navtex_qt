@@ -1,10 +1,11 @@
 #include "panel_item.h"
 //#include "ui_panel_item.h"
 
-panel_item::panel_item(NAVTEXITEM *item, QWidget *parent) :
+panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) :
     QWidget(parent)
 {
     itemvalue=item;
+    index=i;
 
     lbl_time_broadcast = new QLabel(item->Broadcast);
     lbl_time_broadcast->setFont(QFont("wenquanyi micro hei mono",12));
@@ -63,6 +64,22 @@ panel_item::panel_item(NAVTEXITEM *item, QWidget *parent) :
     connect(btn_view,SIGNAL(clicked()),this,SLOT(myviewClick()));
     connect(btn_tts,SIGNAL(clicked()),this,SLOT(myttsClick()));
 
+}
+
+//重绘事件处理
+void panel_item::paintEvent(QPaintEvent *event)
+{
+    QPalette palette;
+    setAutoFillBackground(true);
+    if(index==navtexitemlist_pos)
+    {
+        palette.setColor(QPalette::Window, QColor(227,0,228));
+    }
+    else
+    {
+        palette.setColor(QPalette::Window,palette.color(QPalette::Window));  /*默认的颜色*/
+    }
+    setPalette(palette);
 }
 
 

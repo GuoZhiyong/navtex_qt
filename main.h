@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <QtGui>
+
 #include "control_panel.h"
 #include "panel_info.h"
 #include "panel_serial.h"
@@ -15,5 +17,6 @@ extern panel_setup *pnl_setup;
 extern panel_serial *pnl_serial;
 extern panel_detail *pnl_detail;
 extern panel_about *pnl_about;
+
 
 #endif // MAIN_H

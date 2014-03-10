@@ -33,52 +33,39 @@
     <number>5</number>
    </property>
    <item>
-    <widget class="QLabel" name="lbl_datetime">
-     <property name="font">
-      <font>
-       <family>WenQuanYi Micro Hei Mono</family>
-       <pointsize>20</pointsize>
-      </font>
+    <widget class="QLCDNumber" name="lcd_time">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>44</height>
+      </size>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
-     <property name="text">
-      <string>2014-03-06</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::PlainText</enum>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <family>WenQuanYi Micro Hei</family>
-       <pointsize>32</pointsize>
-      </font>
+     <property name="baseSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="frameShape">
       <enum>QFrame::Box</enum>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+     <property name="lineWidth">
+      <number>1</number>
      </property>
-     <property name="text">
-      <string>13:36:59</string>
+     <property name="midLineWidth">
+      <number>0</number>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="numDigits">
+      <number>8</number>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Filled</enum>
      </property>
     </widget>
    </item>
@@ -139,6 +126,9 @@
       <font>
        <pointsize>16</pointsize>
       </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::DefaultContextMenu</enum>
      </property>
      <property name="title">
       <string>频段选择</string>

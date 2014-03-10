@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     layout->addWidget(stack,15,0);
     layout->addWidget(cp,1,0);
     layout->setContentsMargins(0,0,0,0);
-    win->setWindowFlags(Qt::FramelessWindowHint);
+    //win->setWindowFlags(Qt::FramelessWindowHint);
     win->resize(800,600);
     win->show();
     splash->finish(win);
