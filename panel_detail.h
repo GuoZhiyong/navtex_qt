@@ -4,6 +4,8 @@
 #include <QWidget>
 
 #include "panel_info.h"
+#include "navtexitem.h"
+
 
 namespace Ui {
 class panel_detail;

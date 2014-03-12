@@ -12,6 +12,7 @@
 
 
 #include "panel_info.h"
+#include "navtexitem.h"
 
 class panel_item : public QWidget
 {

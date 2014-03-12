@@ -26,17 +26,16 @@ HEADERS += \
     panel_detail.h \
     main.h \
     mainwin.h \
-    panel_control.h
+    panel_control.h \
+    navtexitem.h
 
 RESOURCES += \
     res.qrc
 
 FORMS += \
-    control_panel.ui \
     panel_info.ui \
     panel_about.ui \
     panel_serial.ui \
     panel_item.ui \
     panel_setup.ui \
-    panel_detail.ui \
-    panel_control.ui
+    panel_detail.ui

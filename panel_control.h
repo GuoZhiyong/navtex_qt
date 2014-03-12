@@ -23,11 +23,12 @@ public:
 
     
 private slots:
-    void on_btn_pnl_setup_clicked();
-    void on_btn_pnl_about_clicked();
-    void on_btn_pnl_info_clicked();
-    void on_btn_pnl_serialport_clicked();
-    void on_btn_pnl_detail_clicked();
+    void on_btn_setup_clicked();
+    void on_btn_about_clicked();
+    void on_btn_info_clicked();
+    void on_btn_serialport_clicked();
+    void on_btn_view_clicked();
+
     void showTime();
 
   void btn_prev_clicked();

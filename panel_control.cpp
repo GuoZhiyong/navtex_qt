@@ -3,7 +3,8 @@
 #include "main.h"
 #include <QtGui>
 
-class MainWin;
+#include "mainwin.h"
+//class MainWin;
 
 panel_control::panel_control(QWidget *parent) :
     QWidget(parent)
@@ -11,6 +12,7 @@ panel_control::panel_control(QWidget *parent) :
     setFont(QFont("wenquanyi micro hei mono",20));
     lcd_time = new QLCDNumber(8);
     lcd_time->setMinimumHeight(40);
+
     btn_view = new QPushButton("查看");
     btn_info = new QPushButton("返回");
     btn_prev = new QPushButton("上一条");
@@ -56,6 +58,7 @@ panel_control::panel_control(QWidget *parent) :
     show();
     //connect(ui->btn_prev,SIGNAL(clicked()),this,SIGNAL(btn_prev_clicked()));
     //connect(ui->btn_next,SIGNAL(clicked()),this,SLOT(btn_next_clicked()));
+    connect(btn_about,SIGNAL(clicked()),this,SLOT(on_btn_about_clicked()));
 }
 
 
@@ -103,29 +106,29 @@ panel_control::~panel_control()
 }
 
 //根据添加页面的顺序调整,使用默认的槽函数格式 on_objname_event
-
-
-void panel_control::on_btn_pnl_info_clicked()
+void panel_control::on_btn_info_clicked()
 {
 //    stack->setCurrentIndex(0);
 }
 
-void panel_control::on_btn_pnl_detail_clicked()
+void panel_control::on_btn_view_clicked()
 {
 //    stack->setCurrentIndex(1);
 }
 
-void panel_control::on_btn_pnl_setup_clicked()
+void panel_control::on_btn_setup_clicked()
 {
 //    stack->setCurrentIndex(2);
 }
 
-void panel_control::on_btn_pnl_serialport_clicked()
+void panel_control::on_btn_serialport_clicked()
 {
 //    stack->setCurrentIndex(3);
 }
 
-void panel_control::on_btn_pnl_about_clicked()
+void panel_control::on_btn_about_clicked()
 {
 //    stack->setCurrentIndex(4);
+   // emit mysignal(4);
+    MainWin::instance()->setStackIndex(4);
 }
