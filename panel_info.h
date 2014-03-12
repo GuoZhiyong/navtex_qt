@@ -8,11 +8,16 @@
 #include <QKeyEvent>
 
 
-namespace Ui {
-class panel_info;
-}
+class QPushButton;
+class QLCDNumber;
+class QGroupBox;
+class QRadioButton;
+class QVBoxLayout;
+class QHBoxLayout;
+class QScrollArea;
 
-class panel_info : public QScrollArea
+
+class panel_info : public QWidget
 {
     Q_OBJECT
 
@@ -22,16 +27,40 @@ public:
     void keyPressEvent(QKeyEvent  *event);
     void myDrawItem(int index);
     void addNavtexItem(QWidget *);
-
+    void clear() const;
 
 public slots:
     void serialport_rx(QByteArray bytes);
-    //void btnViewClick(NAVTEXITEM *item);
-    //void btnTTSClick(NAVTEXITEM *item);
+    void showTime();
+
+    void rb_show_486();
+    void rb_show_518();
+    void rb_show_4209();
+    void rb_show_all();
+
+
 
 private:
-    Ui::panel_info *ui;
-    FlowLayout *layout;             //主布局管理器，用来访问单个的panel_item
+    QHBoxLayout *mainlayout;
+
+    FlowLayout *leftlayout;             //主布局管理器，用来访问单个的panel_item
+    QScrollArea *area;
+
+    QLCDNumber *lcd_time;
+    QPushButton *btn_view;  //查看
+    QPushButton *btn_info;   //返回
+    QPushButton *btn_prev;  //前一个
+    QPushButton *btn_next;  //下一个
+    QGroupBox *grp_chn;  //信道组
+    QRadioButton *rb_486;
+    QRadioButton *rb_518;
+    QRadioButton *rb_4209;
+    QRadioButton *rb_all;
+    QPushButton  *btn_setup;
+    QPushButton  *btn_about;
+    QVBoxLayout *rightlayout;
+    QVBoxLayout *vbox;
+    QTimer *timer;                   //显示时间用的timer
 
 };
 

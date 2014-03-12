@@ -3,7 +3,7 @@
 
 #include "FlowLayout.hpp"
 
-#include "panel_control.h"
+
 #include "panel_info.h"
 #include "panel_serial.h"
 #include "panel_setup.h"
@@ -17,31 +17,26 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
 {
     INSTANCE = this;
 
-    pnl_cp = new panel_control;
+   // pnl_cp = new panel_control;
     pnl_info=new panel_info;
     pnl_setup =new panel_setup;
     pnl_serial =new panel_serial;
     pnl_detail = new panel_detail;
     pnl_about = new panel_about;
 
-    stack=new QStackedWidget();
-    stack->addWidget(pnl_info);
-    stack->addWidget(pnl_detail);
-    stack->addWidget(pnl_setup);
-    stack->addWidget(pnl_serial);
-    stack->addWidget(pnl_about);
+    stacklayout=new QStackedLayout();
+    stacklayout->addWidget(pnl_info);
+    stacklayout->addWidget(pnl_detail);
+    stacklayout->addWidget(pnl_setup);
+    stacklayout->addWidget(pnl_serial);
+    stacklayout->addWidget(pnl_about);
 
-    QObject::connect(pnl_cp,SIGNAL(mysignal(int)),stack,SLOT(setCurrentIndex(int))); //关联显示内容的改变
+
+    stacklayout->setCurrentIndex(0);
+
+   // QObject::connect(pnl_cp,SIGNAL(mysignal(int)),stack,SLOT(setCurrentIndex(int))); //关联显示内容的改变
     QObject::connect(pnl_serial,SIGNAL(signal_serialport_rx(QByteArray)),pnl_info,SLOT(serialport_rx(QByteArray)));
-    QObject::connect(pnl_cp,SIGNAL(btn_prev_clicked()),SLOT(slot_panel_control_btn_prev_clicked()));
-
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    setLayout(layout);
-    layout->addWidget(stack,15,0);
-    layout->addWidget(pnl_cp,1,0);
-    layout->setContentsMargins(0,0,0,0);
-    //win->setWindowFlags(Qt::FramelessWindowHint);
+   // QObject::connect(pnl_cp,SIGNAL(btn_prev_clicked()),SLOT(slot_panel_control_btn_prev_clicked()));
 
     /*打开数据库*/
     dbconn=QSqlDatabase::addDatabase("QSQLITE");
@@ -54,8 +49,6 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     /*添加数据*/
     int index=0;
     NAVTEXITEM *pnavtexitem;
-    panel_item *ppanel_item;
-
     QSqlQuery query;
     query.exec("select * from Informations");
     while(query.next())
@@ -73,17 +66,12 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
         navtexitemlist<<pnavtexitem;
      }
 //添加panel_item
-    QList<NAVTEXITEM *>::iterator i;
-    for(i=navtexitemlist.begin(),index=0;i!=navtexitemlist.end();++i,++index)
-    {
-        ppanel_item=new panel_item(index,*i);
-        pnl_info->addNavtexItem(ppanel_item);
-        connect(ppanel_item,SIGNAL(viewClick(NAVTEXITEM *)),this,SLOT(btnViewClick(NAVTEXITEM *))); //关联信号槽
-        connect(ppanel_item,SIGNAL(ttsClick(NAVTEXITEM *)),this,SLOT(btnTTSClick(NAVTEXITEM *)));
-    }
+    add_pnl_info_item(0);
     navtexitemlist_pos=0;
+    setLayout(stacklayout);
+    //win->setWindowFlags(Qt::FramelessWindowHint);
     resize(800,600);
-    setFocus();
+    //setFocus();
 }
 
 
@@ -103,7 +91,7 @@ void MainWin::keyPressEvent( QKeyEvent *event )
 
 void MainWin::slot_panel_control_btn_prev_clicked()
 {
-        if(stack->currentIndex()==0)  //pnl_info
+        if(stacklayout->currentIndex()==0)  //pnl_info
         {
             int i=navtexitemlist_pos;
             if(i==0)
@@ -127,8 +115,12 @@ void MainWin::slot_panel_control_btn_prev_clicked()
 //切换至panel_detail
  void MainWin::btnViewClick(NAVTEXITEM *item)
  {
+    if(item->fRead==0)  //尚未閱讀，更新數據庫
+    {
+        item->fRead=1;
+    }
     pnl_detail->setcontent(item);
-    stack->setCurrentIndex(1);
+    stacklayout->setCurrentIndex(1);
  }
 
 
@@ -140,5 +132,22 @@ void MainWin::slot_panel_control_btn_prev_clicked()
 
  void MainWin::setStackIndex(int i)
  {
-     stack->setCurrentIndex(i);
+     stacklayout->setCurrentIndex(i);
+ }
+
+ //向panel_info中添加item内容,根据channel类型
+ void MainWin::add_pnl_info_item(int channel_type)
+ {
+    int index=0;
+    panel_item *ppanel_item;
+    QList<NAVTEXITEM *>::iterator item;
+    pnl_info->clear();
+    for(item=navtexitemlist.begin();item!=navtexitemlist.end();++item,++index)
+    {
+        if(((*item)->chn==channel_type)||(channel_type==0))
+        {
+            ppanel_item=new panel_item(index,*item);
+            pnl_info->addNavtexItem(ppanel_item);
+        }
+    }
  }

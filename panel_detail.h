@@ -22,6 +22,8 @@ public:
     
 private:
     Ui::panel_detail *ui;
+private slots:
+    void on_btn_ret_clicked();
 };
 
 #endif // PANEL_DETAIL_H

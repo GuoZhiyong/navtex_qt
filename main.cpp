@@ -3,7 +3,6 @@
 #include <QSplashScreen>
 #include <QTest>
 
-#include "main.h"
 #include "mainwin.h"
 
 int main(int argc, char *argv[])

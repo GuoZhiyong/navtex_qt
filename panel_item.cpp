@@ -1,8 +1,8 @@
 ﻿#include "panel_item.h"
-//#include "ui_panel_item.h"
 
-panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) :
-    QWidget(parent)
+#include "mainwin.h"
+
+panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent)
 {
     itemvalue=item;
     index=i;
@@ -61,7 +61,6 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) :
 //    pal.setColor(QPalette::Active,QPalette::Window,Qt::lightGray);
 //    pal.setColor(QPalette::Inactive,QPalette::Window,Qt::darkGray);
 //    setPalette(pal);
-
     connect(btn_view,SIGNAL(clicked()),this,SLOT(myviewClick()));
     connect(btn_tts,SIGNAL(clicked()),this,SLOT(myttsClick()));
 
@@ -87,12 +86,12 @@ void panel_item::paintEvent(QPaintEvent *event)
 //处理btn_view的clicked事件，发出
 void panel_item::myviewClick()
 {
-    emit viewClick(itemvalue);
+    MainWin::instance()->btnViewClick(itemvalue);
 }
 
 void panel_item::myttsClick()
 {
-    emit ttsClick(itemvalue);
+    MainWin::instance()->btnTTSClick(itemvalue);
 }
 
 

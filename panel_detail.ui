@@ -30,48 +30,6 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetMaximumSize</enum>
      </property>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>始发时间</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="lbl_chn">
-       <property name="text">
-        <string>4209KHz</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5" rowspan="4">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0" rowspan="2">
-      <widget class="QLabel" name="lbl_code">
-       <property name="font">
-        <font>
-         <pointsize>36</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>TA74</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <widget class="QLabel" name="lbl_site">
        <property name="text">
@@ -79,10 +37,10 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_5">
+     <item row="1" column="3">
+      <widget class="QLabel" name="lbl_ber">
        <property name="text">
-        <string>接收时间</string>
+        <string>误码率</string>
        </property>
       </widget>
      </item>
@@ -93,23 +51,24 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="lbl_infotype">
-       <property name="text">
-        <string>气象信息</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6" rowspan="4">
-      <widget class="QPushButton" name="btn_tts">
+     <item row="0" column="0" rowspan="2">
+      <widget class="QLabel" name="lbl_code">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>36</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>播报</string>
+        <string>TA74</string>
        </property>
       </widget>
      </item>
@@ -126,10 +85,37 @@
        </property>
       </spacer>
      </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="lbl_ber">
+     <item row="1" column="4">
+      <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>误码率</string>
+        <string>0.3%</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5" rowspan="4">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="lbl_infotype">
+       <property name="text">
+        <string>气象信息</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="lbl_chn">
+       <property name="text">
+        <string>4209KHz</string>
        </property>
       </widget>
      </item>
@@ -140,10 +126,17 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
-      <widget class="QLabel" name="label_8">
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>0.3%</string>
+        <string>接收时间</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>始发时间</string>
        </property>
       </widget>
      </item>
@@ -181,6 +174,32 @@
        </property>
        <property name="wordWrap">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="6" rowspan="2">
+      <widget class="QPushButton" name="btn_tts">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>播报</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6" rowspan="2">
+      <widget class="QPushButton" name="btn_ret">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>返回</string>
        </property>
       </widget>
      </item>

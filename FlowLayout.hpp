@@ -11,7 +11,7 @@ public:
             int vSpacing = -1);
     FlowLayout(int margin = -1, int hSpacing = -1, int vSpacing = -1);
     ~FlowLayout();
-
+    void clear();
     void addItem(QLayoutItem *item);
     int horizontalSpacing() const;
     int verticalSpacing() const;

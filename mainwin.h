@@ -7,7 +7,7 @@
 
 #include "navtexitem.h"
 
-class QStackedWidget;
+class QStackedLayout;
 class panel_control;
 class panel_info;
 class panel_setup;
@@ -28,6 +28,10 @@ public:
 
     void setStackIndex(int);
 
+    void btnViewClick(NAVTEXITEM *item); //panel_item 查看按鈕按下
+    void btnTTSClick(NAVTEXITEM *item);
+    void add_pnl_info_item(int channel_type);
+
 protected:
     void keyPressEvent(QKeyEvent *);
 signals:
@@ -35,15 +39,12 @@ signals:
 public slots:
     void slot_panel_control_btn_prev_clicked();
     void slot_panel_item_btn_view_clicked();
-    void btnViewClick(NAVTEXITEM *item);
-    void btnTTSClick(NAVTEXITEM *item);
 private:
     QList<NAVTEXITEM *> navtexitemlist;
     int navtexitemlist_pos;
     QSqlDatabase dbconn;            //存储数据库访问的实例
 
-    QStackedWidget *stack;
-    panel_control *pnl_cp;
+    QStackedLayout *stacklayout;
     panel_info *pnl_info;
     panel_setup *pnl_setup;
     panel_serial *pnl_serial;

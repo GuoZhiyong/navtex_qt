@@ -13,8 +13,7 @@ SOURCES += \
     panel_item.cpp \
     panel_setup.cpp \
     panel_detail.cpp \
-    mainwin.cpp \
-    panel_control.cpp
+    mainwin.cpp
 
 HEADERS += \
     FlowLayout.hpp \
@@ -24,16 +23,13 @@ HEADERS += \
     panel_item.h \
     panel_setup.h \
     panel_detail.h \
-    main.h \
     mainwin.h \
-    panel_control.h \
     navtexitem.h
 
 RESOURCES += \
     res.qrc
 
 FORMS += \
-    panel_info.ui \
     panel_about.ui \
     panel_serial.ui \
     panel_item.ui \
