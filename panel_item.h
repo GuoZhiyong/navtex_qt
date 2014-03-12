@@ -1,4 +1,4 @@
-#ifndef PANEL_ITEM_H
+﻿#ifndef PANEL_ITEM_H
 #define PANEL_ITEM_H
 
 #include <QWidget>
@@ -9,6 +9,7 @@
 #include <QLine>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+
 
 #include "panel_info.h"
 
@@ -28,7 +29,7 @@ protected:
     void paintEvent(QPaintEvent *event);//重绘事件处理
 
 private:
-    int index;                 //自己添加的id,对应Qlist的index；
+    int index;                 //自己添加的id,对应flowlayout中的位置，从0开始
     QLabel *lbl_time_broadcast;
     QLabel *lbl_time_receive;
     QLabel *lbl_code;

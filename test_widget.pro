@@ -7,24 +7,26 @@ CONFIG += qtestlib
 SOURCES += \
     main.cpp \
     FlowLayout.cpp \
-    control_panel.cpp \
     panel_info.cpp \
     panel_about.cpp \
     panel_serial.cpp \
     panel_item.cpp \
     panel_setup.cpp \
-    panel_detail.cpp
+    panel_detail.cpp \
+    mainwin.cpp \
+    panel_control.cpp
 
 HEADERS += \
     FlowLayout.hpp \
-    control_panel.h \
     panel_info.h \
     panel_about.h \
     panel_serial.h \
     panel_item.h \
     panel_setup.h \
     panel_detail.h \
-    main.h
+    main.h \
+    mainwin.h \
+    panel_control.h
 
 RESOURCES += \
     res.qrc
@@ -36,4 +38,5 @@ FORMS += \
     panel_serial.ui \
     panel_item.ui \
     panel_setup.ui \
-    panel_detail.ui
+    panel_detail.ui \
+    panel_control.ui

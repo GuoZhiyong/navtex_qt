@@ -1,4 +1,4 @@
-#include "panel_item.h"
+﻿#include "panel_item.h"
 //#include "ui_panel_item.h"
 
 panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) :
@@ -39,6 +39,7 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) :
     vlayout->addWidget(lbl_time_receive);
     vlayout->setContentsMargins(0,0,0,0);
 
+
     hlayout->addWidget(btn_view);
     hlayout->addWidget(lbl_code);
     hlayout->addLayout(vlayout);
@@ -56,10 +57,10 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) :
     setLayout(layout);
     adjustSize();
 //设置颜色
-    QPalette pal= this->palette();
-    pal.setColor(QPalette::Active,QPalette::Window,Qt::lightGray);
-    pal.setColor(QPalette::Inactive,QPalette::Window,Qt::darkGray);
-    setPalette(pal);
+//    QPalette pal= this->palette();
+//    pal.setColor(QPalette::Active,QPalette::Window,Qt::lightGray);
+//    pal.setColor(QPalette::Inactive,QPalette::Window,Qt::darkGray);
+//    setPalette(pal);
 
     connect(btn_view,SIGNAL(clicked()),this,SLOT(myviewClick()));
     connect(btn_tts,SIGNAL(clicked()),this,SLOT(myttsClick()));
@@ -69,17 +70,17 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) :
 //重绘事件处理
 void panel_item::paintEvent(QPaintEvent *event)
 {
-    QPalette palette;
+    QPalette pal;//=palette();
     setAutoFillBackground(true);
     if(index==navtexitemlist_pos)
     {
-        palette.setColor(QPalette::Window, QColor(227,0,228));
+        pal.setColor(QPalette::Window, Qt::darkGray);
     }
     else
     {
-        palette.setColor(QPalette::Window,palette.color(QPalette::Window));  /*默认的颜色*/
+        pal.setColor(QPalette::Window,pal.color(QPalette::Window));  /*默认的颜色*/
     }
-    setPalette(palette);
+    setPalette(pal);
 }
 
 

@@ -1,4 +1,4 @@
-#ifndef PANEL_INFO_H
+﻿#ifndef PANEL_INFO_H
 #define PANEL_INFO_H
 
 #include "FlowLayout.hpp"
@@ -7,11 +7,13 @@
 #include <QtSql>
 #include <QKeyEvent>
 
+
 enum CHANNEL { chn_486 = 0x1, chn_518 = 0x01, chn_4209 = 0x02 };
 
 typedef struct _NavtexItem
 {
-    int id;     //数据库的id,用不到，插入时 并不知道数值
+    int id;     //数据库的id,会根据选择的不同而改变
+    int index;  //在flowlayout中显示的位置,从0开始
     QString code;   //技术编码
     int chn;    //使用通道
     QString Broadcast;
@@ -19,7 +21,6 @@ typedef struct _NavtexItem
     QString Content;
     int fRead;
     int BER;
-    //panel_item *item;
 }NAVTEXITEM;
 
 
