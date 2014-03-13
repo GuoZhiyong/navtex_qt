@@ -23,12 +23,12 @@ public:
     explicit panel_item(int i,NAVTEXITEM *item,QWidget *parent = 0);
     ~panel_item();
 
+    NAVTEXITEM *itemvalue;     //保留对应的list
 signals:
     void viewClick(NAVTEXITEM *itemvalue); //按下view发送的信号，也可同tts一同发送
     void ttsClick(NAVTEXITEM *itemvalue);
 protected:
     void paintEvent(QPaintEvent *event);//重绘事件处理
-
 private:
     int index;                 //自己添加的id,对应flowlayout中的位置，从0开始
     QLabel *lbl_time_broadcast;
@@ -40,7 +40,7 @@ private:
     QHBoxLayout *hlayout; //水平布局
     QVBoxLayout *vlayout; //时间的layout
     QVBoxLayout *layout;  //主要的layout
-    NAVTEXITEM *itemvalue;     //保留对应的list
+
 private slots:
     void myviewClick();    //按下响应的事件
     void myttsClick();    //按下tts响应的事件

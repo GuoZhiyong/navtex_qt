@@ -69,17 +69,17 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
 //重绘事件处理
 void panel_item::paintEvent(QPaintEvent *event)
 {
-//    QPalette pal;//=palette();
-//    setAutoFillBackground(true);
-//    if(index==navtexitemlist_pos)
-//    {
-//        pal.setColor(QPalette::Window, Qt::darkGray);
-//    }
-//    else
-//    {
-//        pal.setColor(QPalette::Window,pal.color(QPalette::Window));  /*默认的颜色*/
-//    }
-//    setPalette(pal);
+    QPalette pal;//=palette();
+    setAutoFillBackground(true);
+    if(index==navtexitemlist_pos)
+    {
+        pal.setColor(QPalette::Window, Qt::darkGray);
+    }
+    else
+    {
+        pal.setColor(QPalette::Window,pal.color(QPalette::Window));  /*默认的颜色*/
+    }
+    setPalette(pal);
 }
 
 
@@ -87,6 +87,12 @@ void panel_item::paintEvent(QPaintEvent *event)
 void panel_item::myviewClick()
 {
     MainWin::instance()->btnViewClick(itemvalue);
+//    if(itemvalue->fRead==0)  //尚未閱讀，更新數據庫
+//    {
+//        itemvalue->fRead=1;
+//    }
+//    pnl_detail->setcontent(itemvalue);
+//    MainWin::instance()->setStackIndex(0);
 }
 
 void panel_item::myttsClick()

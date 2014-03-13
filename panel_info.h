@@ -39,7 +39,12 @@ public slots:
     void rb_show_518();
     void rb_show_4209();
     void rb_show_all();
-
+private slots:
+    void on_btn_view_clicked();
+    void on_btn_prev_clicked();
+    void on_btn_next_clicked();
+    void on_btn_setup_clicked();
+    void on_btn_about_clicked();
 
 
 private:
@@ -51,7 +56,6 @@ private:
 
     QLCDNumber *lcd_time;
     QPushButton *btn_view;  //查看
-    QPushButton *btn_info;   //返回
     QPushButton *btn_prev;  //前一个
     QPushButton *btn_next;  //下一个
     QGroupBox *grp_chn;  //信道组
@@ -64,6 +68,7 @@ private:
     QVBoxLayout *rightlayout;
     QVBoxLayout *vbox;
     QTimer *timer;                   //显示时间用的timer
+
 
 };
 

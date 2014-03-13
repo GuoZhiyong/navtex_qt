@@ -21,7 +21,11 @@ typedef struct _NavtexItem
 
 
 extern QList<NAVTEXITEM *> navtexitemlist;
-void setpos(int i);
-int getpos();
+extern int navtexitemlist_pos;
+void db_init(void);
+void db_close(void);
+
+
+
 
 #endif // NAVTEXITEM_H

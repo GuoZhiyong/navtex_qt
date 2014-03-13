@@ -3,9 +3,10 @@
 
 #include <QWidget>
 
-namespace Ui {
-class panel_about;
-}
+class QPushButton;
+class QGroupBox;
+class QHBoxLayout;
+class QVBoxLayout;
 
 class panel_about : public QWidget
 {
@@ -16,7 +17,11 @@ public:
     ~panel_about();
 
 private:
-    Ui::panel_about *ui;
+    QPushButton *btn_ret;
+    QVBoxLayout *mainlayout;
+
+private slots:
+    void on_btn_ret_clicked();
 };
 
 #endif // PANEL_ABOUT_H

@@ -1,14 +1,30 @@
 #include "panel_about.h"
-#include "ui_panel_about.h"
 
-panel_about::panel_about(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::panel_about)
+#include "mainwin.h"
+
+#include <QtGui>
+
+panel_about::panel_about(QWidget *parent) : QWidget(parent)
 {
-    ui->setupUi(this);
+    setFont(QFont("wenquanyi micro hei mono",20));
+
+    btn_ret = new QPushButton("返回");
+    QObject::connect(btn_ret,SIGNAL(clicked()),this,SLOT(on_btn_ret_clicked()));
+    mainlayout = new QVBoxLayout;
+    mainlayout->addWidget(btn_ret);
+    setLayout(mainlayout);
+
+
+    show();
 }
 
 panel_about::~panel_about()
 {
-    delete ui;
+
+}
+
+
+void panel_about::on_btn_ret_clicked()
+{
+    MainWin::instance()->setStackIndex(0);
 }

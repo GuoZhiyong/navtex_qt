@@ -3,9 +3,13 @@
 
 #include <QWidget>
 
-namespace Ui {
-class panel_setup;
-}
+#include "FlowLayout.hpp"
+
+class QPushButton;
+class QGroupBox;
+class QHBoxLayout;
+class QVBoxLayout;
+
 
 class panel_setup : public QWidget
 {
@@ -16,7 +20,22 @@ public:
     ~panel_setup();
     
 private:
-    Ui::panel_setup *ui;
+    QPushButton *btn_ret;
+    QList<QPushButton *> btn_list_486_site;
+    QList<QPushButton *> btn_list_486_info;
+    QList<QPushButton *> btn_list_518_site;
+    QList<QPushButton *> btn_list_518_info;
+    QList<QPushButton *> btn_list_4209_site;
+    QList<QPushButton *> btn_list_4209_info;
+
+
+    FlowLayout *layout_486_site;
+
+    QVBoxLayout *mainlayout;
+
+private slots:
+    void on_btn_ret_clicked();
+
 };
 
 #endif // SETUP_PANEL_H

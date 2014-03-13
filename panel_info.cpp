@@ -27,9 +27,11 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     lcd_time->setMinimumHeight(40);
 
     btn_view = new QPushButton("查看");
-    btn_info = new QPushButton("返回");
+    QObject::connect(btn_view,SIGNAL(clicked()),SLOT(on_btn_view_clicked()));
     btn_prev = new QPushButton("上一条");
+    QObject::connect(btn_prev,SIGNAL(clicked()),SLOT(on_btn_prev_clicked()));
     btn_next = new QPushButton("下一条");
+    QObject::connect(btn_next,SIGNAL(clicked()),SLOT(on_btn_next_clicked()));
 
     grp_chn  = new QGroupBox("通道显示");
     //grp_chn->setStyleSheet("border: 1px solid lightgray;font-size:16px;");
@@ -54,12 +56,13 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     grp_chn->setLayout(vbox);
 
     btn_setup = new QPushButton("设置");
+    QObject::connect(btn_setup,SIGNAL(clicked()),SLOT(on_btn_setup_clicked()));
     btn_about = new QPushButton("关于");
+    QObject::connect(btn_about,SIGNAL(clicked()),SLOT(on_btn_about_clicked()));
 
     rightlayout = new QVBoxLayout;
     rightlayout->addWidget(lcd_time);
     rightlayout->addWidget(btn_view);
-    rightlayout->addWidget(btn_info);
     rightlayout->addWidget(btn_prev);
     rightlayout->addWidget(btn_next);
     rightlayout->addWidget(grp_chn);
@@ -89,23 +92,18 @@ void panel_info::keyPressEvent( QKeyEvent *event )
    }
 }
 
+
 //重绘自己的item，擦除原来了，绘制新的actived
 void panel_info::myDrawItem(int index)
 {
     panel_item *item;
-    int i=getpos();
-    qDebug()<<"i="<<i;
-    item=(panel_item*)(leftlayout->itemAt(i)->widget()); //绘制原来的
-    setpos(index);
+    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制原来的
+    navtexitemlist_pos=index;
     item->repaint();
-    item=(panel_item*)(leftlayout->itemAt(i)->widget()); //绘制新的
+    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
     item->repaint();
 }
 
-void panel_info::addNavtexItem(QWidget *widget)
-{
-    leftlayout->addWidget(widget);
-}
 
 panel_info::~panel_info()
 {
@@ -146,23 +144,81 @@ void panel_info::updateNavtexItemList(int chn)
     panel_item *ppanel_item;
     QList<NAVTEXITEM *>::iterator item;
 
+    if(navtexitemlist.isEmpty())  //判断是否为空
+    {
+        navtexitemlist_pos=-1;
+        return;
+    }
     clear();
 
-    for(item=navtexitemlist.begin();item!=navtexitemlist.end();++item,++index)
+    for(item=navtexitemlist.begin();item!=navtexitemlist.end();++item)
     {
         if(((*item)->chn==chn)||(chn==0))
         {
             ppanel_item=new panel_item(index,*item);
-            addNavtexItem(ppanel_item);
+            leftlayout->addWidget(ppanel_item);
+            index++;
         }
     }
+    navtexitemlist_pos=0;
+    panel_item *i;
+    i=(panel_item*)(leftlayout->itemAt(0)->widget()); //绘制原来的
+    i->repaint();
 
 }
 
+//查看的slot
+void panel_info::on_btn_view_clicked()
+{
+    panel_item *item;
+    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制原来的
+    MainWin::instance()->btnViewClick(item->itemvalue);
+}
+
+void panel_info::on_btn_prev_clicked()
+{
+    panel_item *item;
+    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制原来的
+    if(navtexitemlist_pos==0)
+    {
+        navtexitemlist_pos=leftlayout->count();
+    }
+    navtexitemlist_pos--;
+    item->repaint();
+    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
+    item->repaint();
+
+}
+
+void panel_info::on_btn_next_clicked()
+{
+    panel_item *item;
+    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制原来的
+    navtexitemlist_pos++;
+    if(navtexitemlist_pos>=leftlayout->count())
+    {
+        navtexitemlist_pos=0;
+    }
+
+    item->repaint();
+    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
+    item->repaint();
+}
+
+
+void panel_info::on_btn_setup_clicked()
+{
+    MainWin::instance()->setStackIndex(2);
+}
+
+void panel_info::on_btn_about_clicked()
+{
+    MainWin::instance()->setStackIndex(4);
+}
+
+
 void panel_info::rb_show_486()
 {
-    //leftlayout->deleteAllItems();
-    //MainWin::instance()->add_pnl_info_item(486);
     updateNavtexItemList(486);
 }
 
