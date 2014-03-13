@@ -21,17 +21,6 @@ FlowLayout::~FlowLayout()
         delete item;
 }
 
-void FlowLayout::clear()
-{
-
-   // qDeleteAll(itemList);
-    QLayoutItem *item;
-    while ((item = takeAt(0)))
-    {
-       // delete item;
-        removeItem(item);
-    }
-}
 
 void FlowLayout::addItem(QLayoutItem *item)
 {

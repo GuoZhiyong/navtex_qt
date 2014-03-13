@@ -7,17 +7,21 @@
 #include <QDateTime>
 
 #include "mainwin.h"
+#include "navtexitem.h"
 
 panel_info::panel_info(QWidget *parent) : QWidget(parent)
 {
     setFont(QFont("wenquanyi micro hei mono",20));
 
-    area=new QScrollArea;
-    area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    area->setStyleSheet("min-width: 30px;");
+    scrollarea=new QScrollArea;
+    scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollarea->setStyleSheet("min-width: 30px;");
+    scrollarea->setWidgetResizable(true);
+    scrollwidget=new QWidget(scrollarea);
+    scrollarea->setWidget(scrollwidget);
 
     leftlayout = new FlowLayout(0,5,0);
-    area->setLayout(leftlayout);
+    scrollwidget->setLayout(leftlayout);
 
     lcd_time = new QLCDNumber(8);
     lcd_time->setMinimumHeight(40);
@@ -70,7 +74,7 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     showTime();
 
     mainlayout=new QHBoxLayout(parent);
-    mainlayout->addWidget(area,15);
+    mainlayout->addWidget(scrollarea,15);
     mainlayout->addLayout(rightlayout,1);
     mainlayout->setContentsMargins(2,0,2,0);
     setLayout(mainlayout);
@@ -88,12 +92,14 @@ void panel_info::keyPressEvent( QKeyEvent *event )
 //重绘自己的item，擦除原来了，绘制新的actived
 void panel_info::myDrawItem(int index)
 {
-//    panel_item *item;
-//    item=(panel_item*)(layout->itemAt(navtexitemlist_pos)->widget()); //绘制原来的
-//    navtexitemlist_pos=index;
-//    item->repaint();
-//    item=(panel_item*)(layout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
-//    item->repaint();
+    panel_item *item;
+    int i=getpos();
+    qDebug()<<"i="<<i;
+    item=(panel_item*)(leftlayout->itemAt(i)->widget()); //绘制原来的
+    setpos(index);
+    item->repaint();
+    item=(panel_item*)(leftlayout->itemAt(i)->widget()); //绘制新的
+    item->repaint();
 }
 
 void panel_info::addNavtexItem(QWidget *widget)
@@ -105,9 +111,16 @@ panel_info::~panel_info()
 {
 }
 
+
+//清除panel_info 中的item
 void panel_info::clear() const
 {
-    leftlayout->clear();
+     QLayoutItem *item;
+     while ((item = leftlayout->takeAt(0)))
+     {
+         delete item->widget();  //删除item绑定的Widget
+         leftlayout->removeItem(item);
+     }
 }
 
 
@@ -126,25 +139,48 @@ void panel_info::showTime()
 
 }
 
+void panel_info::updateNavtexItemList(int chn)
+{
+
+    int index=0;
+    panel_item *ppanel_item;
+    QList<NAVTEXITEM *>::iterator item;
+
+    clear();
+
+    for(item=navtexitemlist.begin();item!=navtexitemlist.end();++item,++index)
+    {
+        if(((*item)->chn==chn)||(chn==0))
+        {
+            ppanel_item=new panel_item(index,*item);
+            addNavtexItem(ppanel_item);
+        }
+    }
+
+}
 
 void panel_info::rb_show_486()
 {
     //leftlayout->deleteAllItems();
-    MainWin::instance()->add_pnl_info_item(486);
+    //MainWin::instance()->add_pnl_info_item(486);
+    updateNavtexItemList(486);
 }
 
 void panel_info::rb_show_518()
 {
-    MainWin::instance()->add_pnl_info_item(518);
+    //MainWin::instance()->add_pnl_info_item(518);
+    updateNavtexItemList(518);
 }
 
 void panel_info::rb_show_4209()
 {
-    MainWin::instance()->add_pnl_info_item(4209);
+    //MainWin::instance()->add_pnl_info_item(4209);
+    updateNavtexItemList(4209);
 }
 
 void panel_info::rb_show_all()
 {
-    MainWin::instance()->add_pnl_info_item(0);
+    //MainWin::instance()->add_pnl_info_item(0);
+    updateNavtexItemList(0);
 }
 

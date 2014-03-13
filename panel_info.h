@@ -16,6 +16,7 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QScrollArea;
 
+#include "navtexitem.h"
 
 class panel_info : public QWidget
 {
@@ -28,6 +29,7 @@ public:
     void myDrawItem(int index);
     void addNavtexItem(QWidget *);
     void clear() const;
+    void updateNavtexItemList(int chn);
 
 public slots:
     void serialport_rx(QByteArray bytes);
@@ -44,7 +46,8 @@ private:
     QHBoxLayout *mainlayout;
 
     FlowLayout *leftlayout;             //主布局管理器，用来访问单个的panel_item
-    QScrollArea *area;
+    QScrollArea *scrollarea;
+    QWidget *scrollwidget;
 
     QLCDNumber *lcd_time;
     QPushButton *btn_view;  //查看

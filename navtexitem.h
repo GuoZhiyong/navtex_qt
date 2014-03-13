@@ -1,8 +1,9 @@
 #ifndef NAVTEXITEM_H
 #define NAVTEXITEM_H
 
+#include <QString>
+#include <QList>
 
-enum CHANNEL { chn_486 = 0x1, chn_518 = 0x01, chn_4209 = 0x02 };
 
 typedef struct _NavtexItem
 {
@@ -17,5 +18,10 @@ typedef struct _NavtexItem
     int BER;
 }NAVTEXITEM;
 
+
+
+extern QList<NAVTEXITEM *> navtexitemlist;
+void setpos(int i);
+int getpos();
 
 #endif // NAVTEXITEM_H

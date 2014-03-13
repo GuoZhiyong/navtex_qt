@@ -13,7 +13,8 @@ SOURCES += \
     panel_item.cpp \
     panel_setup.cpp \
     panel_detail.cpp \
-    mainwin.cpp
+    mainwin.cpp \
+    naxtexitem.cpp
 
 HEADERS += \
     FlowLayout.hpp \

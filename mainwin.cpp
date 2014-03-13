@@ -12,6 +12,8 @@
 #include "panel_item.h"
 
 MainWin* MainWin::INSTANCE=0;
+int MainWin::item_pos=0;
+
 
 MainWin::MainWin(QWidget *parent) : QWidget(parent)
 {
@@ -66,8 +68,9 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
         navtexitemlist<<pnavtexitem;
      }
 //添加panel_item
-    add_pnl_info_item(0);
-    navtexitemlist_pos=0;
+    //add_pnl_info_item(0);
+    pnl_info->updateNavtexItemList(0);
+    //navtexitemlist_pos=0;
     setLayout(stacklayout);
     //win->setWindowFlags(Qt::FramelessWindowHint);
     resize(800,600);
@@ -91,17 +94,18 @@ void MainWin::keyPressEvent( QKeyEvent *event )
 
 void MainWin::slot_panel_control_btn_prev_clicked()
 {
-        if(stacklayout->currentIndex()==0)  //pnl_info
+    if(stacklayout->currentIndex()==0)  //pnl_info
+    {
+        int i=item_pos;
+        qDebug()<<__func__<<__LINE__<<"i="<<i;
+        if(i==0)
         {
-            int i=navtexitemlist_pos;
-            if(i==0)
-            {
-                i=navtexitemlist.size();
-            }
-            i--;
-            pnl_info->myDrawItem(i);
+            i=navtexitemlist.size();
         }
-        setFocusProxy(pnl_info);
+        i--;
+        pnl_info->myDrawItem(i);
+    }
+    setFocusProxy(pnl_info);
 }
 
 
