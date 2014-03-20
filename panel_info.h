@@ -1,4 +1,5 @@
-﻿#ifndef PANEL_INFO_H
+
+#ifndef PANEL_INFO_H
 #define PANEL_INFO_H
 
 #include "FlowLayout.hpp"
@@ -16,7 +17,7 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QScrollArea;
 
-#include "navtexitem.h"
+#include "common.h"
 
 class panel_info : public QWidget
 {

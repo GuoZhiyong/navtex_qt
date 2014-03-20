@@ -1,4 +1,5 @@
-﻿#ifndef PANEL_ITEM_H
+
+#ifndef PANEL_ITEM_H
 #define PANEL_ITEM_H
 
 #include <QWidget>
@@ -12,7 +13,7 @@
 
 
 #include "panel_info.h"
-#include "navtexitem.h"
+#include "common.h"
 
 class panel_item : public QWidget
 {
@@ -23,6 +24,7 @@ public:
     explicit panel_item(int i,NAVTEXITEM *item,QWidget *parent = 0);
     ~panel_item();
 
+    int index;                 //自己添加的id,对应flowlayout中的位置，从0开始
     NAVTEXITEM *itemvalue;     //保留对应的list
 signals:
     void viewClick(NAVTEXITEM *itemvalue); //按下view发送的信号，也可同tts一同发送
@@ -30,7 +32,7 @@ signals:
 protected:
     void paintEvent(QPaintEvent *event);//重绘事件处理
 private:
-    int index;                 //自己添加的id,对应flowlayout中的位置，从0开始
+
     QLabel *lbl_time_broadcast;
     QLabel *lbl_time_receive;
     QLabel *lbl_code;

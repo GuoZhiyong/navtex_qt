@@ -5,7 +5,7 @@
 #include <QKeyEvent>
 
 
-#include "navtexitem.h"
+#include "common.h"
 
 class QStackedLayout;
 class panel_control;

@@ -12,7 +12,7 @@ panel_serial::panel_serial(QWidget *parent) :
 {
     ui->setupUi(this);
     PortSettings settings = {BAUD115200, DATA_8, PAR_NONE, STOP_1, FLOW_OFF, 10};
-    serialport = new QextSerialPort("ttyS0",settings,QextSerialPort::EventDriven);
+    serialport = new QextSerialPort("ttyS1",settings,QextSerialPort::EventDriven);
     serialport->open(QIODevice::ReadWrite);
     if(serialport->isOpen())
     {
@@ -20,7 +20,7 @@ panel_serial::panel_serial(QWidget *parent) :
     }
     else
     {
-        qDebug()<<"串口打开失败"<<endl;
+        qDebug()<<tr("串口打开失败")<<endl;
     }
 
 }

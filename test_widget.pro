@@ -14,7 +14,7 @@ SOURCES += \
     panel_setup.cpp \
     panel_detail.cpp \
     mainwin.cpp \
-    naxtexitem.cpp
+    common.cpp
 
 HEADERS += \
     FlowLayout.hpp \
@@ -25,7 +25,7 @@ HEADERS += \
     panel_setup.h \
     panel_detail.h \
     mainwin.h \
-    navtexitem.h
+    common.h
 
 RESOURCES += \
     res.qrc

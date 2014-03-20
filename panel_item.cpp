@@ -1,5 +1,4 @@
-﻿#include "panel_item.h"
-
+#include "panel_item.h"
 #include "mainwin.h"
 
 panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent)
@@ -8,18 +7,20 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
     index=i;
 
     lbl_time_broadcast = new QLabel(item->Broadcast);
-    lbl_time_broadcast->setFont(QFont("wenquanyi micro hei mono",12));
+    lbl_time_broadcast->setFont(QFont("Kaiti",12));
 
     lbl_time_receive = new QLabel(item->Receive);
-    lbl_time_receive->setFont(QFont("wenquanyi micro hei mono",12));
-
-    lbl_code = new QLabel(item->code);
-    lbl_code->setFont(QFont("wenquanyi micro hei mono",22,QFont::Bold));
+    lbl_time_receive->setFont(QFont("Kaiti",12));
 
     vlayout = new QVBoxLayout();
-    hlayout = new QHBoxLayout;
-    layout = new QVBoxLayout;
-    line = new QFrame();
+    vlayout->addWidget(lbl_time_broadcast);
+    vlayout->addWidget(lbl_time_receive);
+    vlayout->setContentsMargins(0,0,0,0);
+
+
+    lbl_code = new QLabel(item->code);
+    lbl_code->setFont(QFont("Kaiti",22,QFont::Bold));
+
     btn_view = new QPushButton();
     if(item->fRead)
     {
@@ -35,32 +36,28 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
     btn_tts->setIconSize(QSize(32,32));
     btn_tts->setStyleSheet(tr("QPushButton:hover{background-color:green;}QPushButton:pressed{background-color:red;}"));
 
-    vlayout->addWidget(lbl_time_broadcast);
-    vlayout->addWidget(lbl_time_receive);
-    vlayout->setContentsMargins(0,0,0,0);
 
 
+    hlayout = new QHBoxLayout;
     hlayout->addWidget(btn_view);
     hlayout->addWidget(lbl_code);
     hlayout->addLayout(vlayout);
     hlayout->addWidget(btn_tts);
     hlayout->setContentsMargins(0,0,0,0);
-    hlayout->setSpacing(0);
-    layout->addLayout(hlayout);
+    hlayout->setSpacing(4);
 
+    layout = new QVBoxLayout;
+    line = new QFrame();
     line->setFrameShape(QFrame::HLine);
     line->setFrameShadow(QFrame::Sunken);
+    layout->addLayout(hlayout);
     layout->addWidget(line);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
 
     setLayout(layout);
     adjustSize();
-//设置颜色
-//    QPalette pal= this->palette();
-//    pal.setColor(QPalette::Active,QPalette::Window,Qt::lightGray);
-//    pal.setColor(QPalette::Inactive,QPalette::Window,Qt::darkGray);
-//    setPalette(pal);
+
     connect(btn_view,SIGNAL(clicked()),this,SLOT(myviewClick()));
     connect(btn_tts,SIGNAL(clicked()),this,SLOT(myttsClick()));
 
@@ -83,16 +80,13 @@ void panel_item::paintEvent(QPaintEvent *event)
 }
 
 
-//处理btn_view的clicked事件，发出
+//处理btn_view的clicked事件，更新显示，发出
 void panel_item::myviewClick()
 {
+    repaint();
+    navtexitemlist_pos=index;
+    repaint();
     MainWin::instance()->btnViewClick(itemvalue);
-//    if(itemvalue->fRead==0)  //尚未閱讀，更新數據庫
-//    {
-//        itemvalue->fRead=1;
-//    }
-//    pnl_detail->setcontent(itemvalue);
-//    MainWin::instance()->setStackIndex(0);
 }
 
 void panel_item::myttsClick()

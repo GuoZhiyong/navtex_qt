@@ -1,4 +1,5 @@
-﻿#include "panel_info.h"
+
+#include "panel_info.h"
 #include "FlowLayout.hpp"
 #include "panel_item.h"
 
@@ -7,7 +8,7 @@
 #include <QDateTime>
 
 #include "mainwin.h"
-#include "navtexitem.h"
+#include "common.h"
 
 panel_info::panel_info(QWidget *parent) : QWidget(parent)
 {
@@ -17,6 +18,7 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     scrollarea->setStyleSheet("min-width: 30px;");
     scrollarea->setWidgetResizable(true);
+    //scrollarea->setContentsMargins(2,0,2,0);
     scrollwidget=new QWidget(scrollarea);
     scrollarea->setWidget(scrollwidget);
 
@@ -26,38 +28,35 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     lcd_time = new QLCDNumber(8);
     lcd_time->setMinimumHeight(40);
 
-    btn_view = new QPushButton("查看");
+    btn_view = new QPushButton(tr("查看"));
     QObject::connect(btn_view,SIGNAL(clicked()),SLOT(on_btn_view_clicked()));
-    btn_prev = new QPushButton("上一条");
+    btn_prev = new QPushButton(tr("上一条"));
     QObject::connect(btn_prev,SIGNAL(clicked()),SLOT(on_btn_prev_clicked()));
-    btn_next = new QPushButton("下一条");
+    btn_next = new QPushButton(tr("下一条"));
     QObject::connect(btn_next,SIGNAL(clicked()),SLOT(on_btn_next_clicked()));
 
-    grp_chn  = new QGroupBox("通道显示");
+    grp_chn  = new QGroupBox(tr("通道显示"));
     //grp_chn->setStyleSheet("border: 1px solid lightgray;font-size:16px;");
-    grp_chn->setStyleSheet("font-size:16px;");
-    rb_486  = new QRadioButton("486KHz");
-    rb_518  = new QRadioButton("518KHz");
-    rb_4209  = new QRadioButton("4209KHz");
-    rb_all  = new QRadioButton("全部");
+    grp_chn->setStyleSheet("font-size:18px;");
+    rb_486  = new QRadioButton(tr("486KHz"));
+    rb_518  = new QRadioButton(tr("518KHz"));
+    rb_4209  = new QRadioButton(tr("4209KHz"));
+    rb_all  = new QRadioButton(tr("全部"));
     QObject::connect(rb_486,SIGNAL(clicked()),SLOT(rb_show_486()));
     QObject::connect(rb_518,SIGNAL(clicked()),SLOT(rb_show_518()));
     QObject::connect(rb_4209,SIGNAL(clicked()),SLOT(rb_show_4209()));
     QObject::connect(rb_all,SIGNAL(clicked()),SLOT(rb_show_all()));
-
-
     rb_all->setChecked(true);
     vbox= new QVBoxLayout;
     vbox->addWidget(rb_486);
     vbox->addWidget(rb_518);
     vbox->addWidget(rb_4209);
     vbox->addWidget(rb_all);
-
     grp_chn->setLayout(vbox);
 
-    btn_setup = new QPushButton("设置");
+    btn_setup = new QPushButton(tr("设置"));
     QObject::connect(btn_setup,SIGNAL(clicked()),SLOT(on_btn_setup_clicked()));
-    btn_about = new QPushButton("关于");
+    btn_about = new QPushButton(tr("关于"));
     QObject::connect(btn_about,SIGNAL(clicked()),SLOT(on_btn_about_clicked()));
 
     rightlayout = new QVBoxLayout;
@@ -77,19 +76,44 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     showTime();
 
     mainlayout=new QHBoxLayout(parent);
-    mainlayout->addWidget(scrollarea,15);
-    mainlayout->addLayout(rightlayout,1);
-    mainlayout->setContentsMargins(2,0,2,0);
+    mainlayout->addWidget(scrollarea);
+    mainlayout->addLayout(rightlayout);
+    mainlayout->setContentsMargins(0,0,0,0);
     setLayout(mainlayout);
     show();
 }
 //按键事件处理
 void panel_info::keyPressEvent( QKeyEvent *event )
 {
-    if(event->key()==Qt::Key_Up)
-   {
-        qDebug()<<"Q press";
-   }
+    QByteArray ba;
+    if(tts_fd)
+    {
+        ba.resize(5);
+        ba[0]=0xfd;
+        ba[3]=0x01;
+        ba[4]=0x00;
+        ba.append("[x1]sound101");
+        ba[1]=(ba.size()-3)>>8;
+        ba[2]=(ba.size()-3)&0xFF;
+        if(tts_fd)
+        {
+            ::write(tts_fd,ba,ba.size());
+        }
+    }
+    qDebug()<<"panel_info type "<<event->type()<<" key "<<event->key();
+    switch(event->key())
+    {
+    case KEY_UP:
+    case KEY_LEFT:  on_btn_prev_clicked();break;
+    case KEY_DOWN:
+    case KEY_RIGHT:  on_btn_next_clicked();break;
+    case KEY_OK: on_btn_view_clicked();break;
+    case KEY_486: rb_486->setChecked(true);rb_show_486(); break;
+    case KEY_518: rb_518->setChecked(true);rb_show_518(); break;
+    case KEY_4209: rb_4209->setChecked(true);rb_show_4209(); break;
+    case KEY_DATA: rb_all->setChecked(true); rb_show_all();break;
+    }
+
 }
 
 
@@ -175,6 +199,7 @@ void panel_info::on_btn_view_clicked()
     MainWin::instance()->btnViewClick(item->itemvalue);
 }
 
+//显示下一条
 void panel_info::on_btn_prev_clicked()
 {
     panel_item *item;
@@ -190,6 +215,7 @@ void panel_info::on_btn_prev_clicked()
 
 }
 
+//显示上一条
 void panel_info::on_btn_next_clicked()
 {
     panel_item *item;
@@ -199,7 +225,6 @@ void panel_info::on_btn_next_clicked()
     {
         navtexitemlist_pos=0;
     }
-
     item->repaint();
     item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
     item->repaint();
