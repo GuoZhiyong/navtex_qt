@@ -1,6 +1,7 @@
 #include "panel_detail.h"
 #include "ui_panel_detail.h"
 #include "mainwin.h"
+#include "common.h"
 
 panel_detail::panel_detail(QWidget *parent) :
     QWidget(parent),
@@ -12,7 +13,10 @@ panel_detail::panel_detail(QWidget *parent) :
 void panel_detail::setcontent(NAVTEXITEM *i)
 {
     item=i;
-    ui->lbl_code->setText(item->code);
+    QString str=item->code;
+    ui->lbl_code->setText(str);
+    ui->lbl_site->setText(qmap_site[str.mid(0,1)]);
+    ui->lbl_infotype->setText(qmap_infotype[str.mid(1,1)]);
     ui->lbl_broadcast->setText(item->Broadcast);
     ui->txt_info->setText(item->Content);
 }

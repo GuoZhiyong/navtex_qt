@@ -91,6 +91,9 @@ void panel_item::myviewClick()
 
 void panel_item::myttsClick()
 {
+    repaint();
+    navtexitemlist_pos=index;
+    repaint();
     MainWin::instance()->btnTTSClick(itemvalue);
 }
 

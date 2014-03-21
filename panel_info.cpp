@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QtGui>
 #include <QDateTime>
+#include <QElapsedTimer>
+
 
 #include "mainwin.h"
 #include "common.h"
@@ -59,6 +61,10 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     btn_about = new QPushButton(tr("关于"));
     QObject::connect(btn_about,SIGNAL(clicked()),SLOT(on_btn_about_clicked()));
 
+    btn_exit = new QPushButton(tr("退出"));
+    QObject::connect(btn_exit,SIGNAL(clicked()),SLOT(on_btn_exit_clicked()));
+
+
     rightlayout = new QVBoxLayout;
     rightlayout->addWidget(lcd_time);
     rightlayout->addWidget(btn_view);
@@ -68,6 +74,7 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     rightlayout->addStretch(1);
     rightlayout->addWidget(btn_setup);
     rightlayout->addWidget(btn_about);
+    rightlayout->addWidget(btn_exit);
     rightlayout->setContentsMargins(0,0,0,0);
 
     timer = new QTimer(this);
@@ -168,11 +175,16 @@ void panel_info::updateNavtexItemList(int chn)
     panel_item *ppanel_item;
     QList<NAVTEXITEM *>::iterator item;
 
+
     if(navtexitemlist.isEmpty())  //判断是否为空
     {
         navtexitemlist_pos=-1;
         return;
     }
+
+    QElapsedTimer timer;
+    timer.start();
+
     clear();
 
     for(item=navtexitemlist.begin();item!=navtexitemlist.end();++item)
@@ -188,6 +200,7 @@ void panel_info::updateNavtexItemList(int chn)
     panel_item *i;
     i=(panel_item*)(leftlayout->itemAt(0)->widget()); //绘制原来的
     i->repaint();
+    qDebug() << "updateNavtexItemList:" << timer.elapsed() << "milliseconds";
 
 }
 
@@ -239,6 +252,16 @@ void panel_info::on_btn_setup_clicked()
 void panel_info::on_btn_about_clicked()
 {
     MainWin::instance()->setStackIndex(4);
+}
+
+void panel_info::on_btn_exit_clicked()
+{
+  //  QApplication::quit();
+    if(!(QMessageBox::information(this,tr("退出程序"),tr("确定退出程序吗？"),tr("确认"),tr("取消"))))
+    {
+        db_close();
+        QApplication::quit();
+    }
 }
 
 

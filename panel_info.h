@@ -46,7 +46,7 @@ private slots:
     void on_btn_next_clicked();
     void on_btn_setup_clicked();
     void on_btn_about_clicked();
-
+    void on_btn_exit_clicked();
 
 private:
     QHBoxLayout *mainlayout;
@@ -66,6 +66,7 @@ private:
     QRadioButton *rb_all;
     QPushButton  *btn_setup;
     QPushButton  *btn_about;
+    QPushButton  *btn_exit;
     QVBoxLayout *rightlayout;
     QVBoxLayout *vbox;
     QTimer *timer;                   //显示时间用的timer

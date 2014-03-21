@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QList>
-
+#include <QMap>
 
 #define KEY_CHN     0
 #define KEY_PGUP    1
@@ -51,6 +51,14 @@ typedef struct _NavtexItem
 
 extern QList<NAVTEXITEM *> navtexitemlist;
 extern int navtexitemlist_pos;
+
+extern QString sl_site[];
+extern QString sl_info[];
+
+extern QMap<QString,QString> qmap_site;
+extern QMap<QString,QString> qmap_infotype;
+
+
 extern int tts_fd;
 void db_init(void);
 void db_close(void);

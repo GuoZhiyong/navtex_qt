@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     MainWin win;
 
     //QTest::qSleep(3000);
-    splash->showMessage(QObject::tr("显示窗体"),Qt::AlignBottom|Qt::AlignVCenter,Qt::red);
+    splash->showMessage(QObject::tr("显示窗体"),Qt::AlignHCenter|Qt::AlignVCenter,Qt::red);
     win.show();
     splash->finish(&win);
     delete splash;

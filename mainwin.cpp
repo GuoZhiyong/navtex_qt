@@ -163,6 +163,7 @@ void MainWin::keyPressEvent( QKeyEvent *event )
          qDebug()<<"ba_info.size="<<ba_info.size();
          ba_info[1]=(ba_info.size()-3)>>8;
          ba_info[2]=(ba_info.size()-3)&0xFF;
+         /*
          for(int i=0;i<ba_info.size();++i)
          {
              if(i%16==0)
@@ -171,6 +172,7 @@ void MainWin::keyPressEvent( QKeyEvent *event )
              }
              fprintf(stderr, "%02x ",ba_info.at(i));
          }
+         */
          ::write(tts_fd,ba_info,ba_info.size());
      }
  }
