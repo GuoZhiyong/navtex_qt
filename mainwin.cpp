@@ -59,14 +59,13 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
         qDebug()<<"open tts failed";
     }
 
-
-    db_init();
-
-    pnl_info->updateNavtexItemList(0);
     setLayout(stacklayout);
     setWindowFlags(Qt::FramelessWindowHint);
     resize(800,600);
-    //setFocus();
+//创建完成后再添加数据
+    db_init();
+    pnl_info->updateNavtexItemList(0);
+
 }
 
 

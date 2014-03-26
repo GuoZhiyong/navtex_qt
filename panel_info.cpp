@@ -174,8 +174,6 @@ void panel_info::showTime()
 
 void panel_info::updateNavtexItemList(int chn)
 {
-
-
     panel_item *ppanel_item;
     QList<QWidget *>::iterator item;
 
@@ -190,8 +188,6 @@ void panel_info::updateNavtexItemList(int chn)
 
     clear();
 
-//    qDebug() << "updateNavtexItemList: clear" << timer.elapsed() << "milliseconds";
-//    timer.restart();
     int index=0;
     navtexitemlist_pos=0;
     for(item=itemlist.begin();item!=itemlist.end();++item)
@@ -199,7 +195,6 @@ void panel_info::updateNavtexItemList(int chn)
         ppanel_item=static_cast<panel_item *>(*item);
         if((ppanel_item->itemvalue->chn==chn)||(chn==0))
         {
-            //static_cast<panel_item *>(*item)->itemvalue->index=index;
             ppanel_item->index=index;
             leftlayout->addWidget(*item);
             index++;
@@ -207,10 +202,8 @@ void panel_info::updateNavtexItemList(int chn)
     }
 //    qDebug() << "updateNavtexItemList: addwidget" << timer.elapsed() << "milliseconds";
 //    timer.restart();
-
-//    panel_item *i;
-//    i=(panel_item*)(leftlayout->itemAt(0)->widget()); //绘制原来的
-//    i->repaint();
+    ppanel_item=(panel_item*)(leftlayout->itemAt(0)->widget()); //绘制原来的
+    ppanel_item->setFocus(Qt::OtherFocusReason);
     qDebug() << "updateNavtexItemList: repaint" << timer.elapsed() << "milliseconds";
 
 }
@@ -227,31 +220,26 @@ void panel_info::on_btn_view_clicked()
 void panel_info::on_btn_prev_clicked()
 {
     panel_item *item;
-    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制原来的
     if(navtexitemlist_pos==0)
     {
         navtexitemlist_pos=leftlayout->count();
     }
     navtexitemlist_pos--;
-    item->repaint();
     item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
-    item->repaint();
-
+    item->setFocus(Qt::OtherFocusReason);
 }
 
 //显示上一条
 void panel_info::on_btn_next_clicked()
 {
     panel_item *item;
-    item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制原来的
     navtexitemlist_pos++;
     if(navtexitemlist_pos>=leftlayout->count())
     {
         navtexitemlist_pos=0;
     }
-    item->repaint();
     item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
-    item->repaint();
+    item->setFocus(Qt::OtherFocusReason);
 }
 
 

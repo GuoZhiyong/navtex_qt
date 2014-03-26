@@ -34,7 +34,10 @@ signals:
     void viewClick(ITEM_DATA *itemvalue); //按下view发送的信号，也可同tts一同发送
     void ttsClick(ITEM_DATA *itemvalue);
 protected:
-    void paintEvent(QPaintEvent *event);//重绘事件处理
+    void focusInEvent(QFocusEvent *evt);
+    void focusOutEvent(QFocusEvent *evt);
+
+
 private:
 //    static QPixmap pix_lock;
 //    static QPixmap pix_unlock;

@@ -88,19 +88,24 @@ panel_item::panel_item(int i,ITEM_DATA *item_data, QWidget *parent) : QWidget(pa
 
 }
 
-//重绘事件处理
-void panel_item::paintEvent(QPaintEvent *event)
+
+
+void panel_item::focusInEvent(QFocusEvent *evt)
 {
+    qDebug()<<itemvalue->code<<"focus in";
+    navtexitemlist_pos=index;
     QPalette pal;//=palette();
     setAutoFillBackground(true);
-    if(index==navtexitemlist_pos)
-    {
-        pal.setColor(QPalette::Window, Qt::darkGray);
-    }
-    else
-    {
-        pal.setColor(QPalette::Window,pal.color(QPalette::Window));  /*默认的颜色*/
-    }
+    pal.setColor(QPalette::Window, Qt::darkGray);
+    setPalette(pal);
+}
+
+void panel_item::focusOutEvent(QFocusEvent *evt)
+{
+    qDebug()<<itemvalue->code<<"focus out";
+    QPalette pal;//=palette();
+    setAutoFillBackground(true);
+    pal.setColor(QPalette::Window,pal.color(QPalette::Window));  /*默认的颜色*/
     setPalette(pal);
 }
 
@@ -108,17 +113,13 @@ void panel_item::paintEvent(QPaintEvent *event)
 //处理btn_view的clicked事件，更新显示，发出
 void panel_item::myviewClick()
 {
-    repaint();
-    navtexitemlist_pos=index;
-    repaint();
+    setFocus(Qt::OtherFocusReason);
     MainWin::instance()->btnViewClick(itemvalue);
 }
 
 void panel_item::myttsClick()
 {
-    repaint();
-    navtexitemlist_pos=index;
-    repaint();
+    setFocus(Qt::OtherFocusReason);
     MainWin::instance()->btnTTSClick(itemvalue);
 }
 
