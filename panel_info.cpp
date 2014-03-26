@@ -7,7 +7,7 @@
 #include <QtGui>
 #include <QDateTime>
 #include <QElapsedTimer>
-
+#include <QTest>
 
 #include "mainwin.h"
 #include "common.h"
@@ -147,14 +147,13 @@ panel_info::~panel_info()
 void panel_info::clear() const
 {
      QLayoutItem *item;
-     QElapsedTimer timer;
-     timer.start();
-     while ((item = leftlayout->takeAt(0)))
+     while((item=leftlayout->takeAt(0))!=0)
      {
-         delete item->widget();  //删除item绑定的Widget
+         item->widget()->setParent(NULL);//关键
+         //delete item->widget();  //删除item绑定的Widget
+         //leftlayout->removeWidget(item->widget());
          leftlayout->removeItem(item);
      }
-     qDebug() << "clear:" << timer.elapsed() << "milliseconds";
 }
 
 
@@ -176,12 +175,11 @@ void panel_info::showTime()
 void panel_info::updateNavtexItemList(int chn)
 {
 
-    int index=0;
+
     panel_item *ppanel_item;
-    QList<NAVTEXITEM *>::iterator item;
+    QList<QWidget *>::iterator item;
 
-
-    if(navtexitemlist.isEmpty())  //判断是否为空
+    if(itemlist.isEmpty())  //判断是否为空
     {
         navtexitemlist_pos=-1;
         return;
@@ -192,20 +190,28 @@ void panel_info::updateNavtexItemList(int chn)
 
     clear();
 
-    for(item=navtexitemlist.begin();item!=navtexitemlist.end();++item)
+//    qDebug() << "updateNavtexItemList: clear" << timer.elapsed() << "milliseconds";
+//    timer.restart();
+    int index=0;
+    navtexitemlist_pos=0;
+    for(item=itemlist.begin();item!=itemlist.end();++item)
     {
-        if(((*item)->chn==chn)||(chn==0))
+        ppanel_item=static_cast<panel_item *>(*item);
+        if((ppanel_item->itemvalue->chn==chn)||(chn==0))
         {
-            ppanel_item=new panel_item(index,*item);
-            leftlayout->addWidget(ppanel_item);
+            //static_cast<panel_item *>(*item)->itemvalue->index=index;
+            ppanel_item->index=index;
+            leftlayout->addWidget(*item);
             index++;
         }
     }
-    navtexitemlist_pos=0;
-    panel_item *i;
-    i=(panel_item*)(leftlayout->itemAt(0)->widget()); //绘制原来的
-    i->repaint();
-    qDebug() << "updateNavtexItemList:" << timer.elapsed() << "milliseconds";
+//    qDebug() << "updateNavtexItemList: addwidget" << timer.elapsed() << "milliseconds";
+//    timer.restart();
+
+//    panel_item *i;
+//    i=(panel_item*)(leftlayout->itemAt(0)->widget()); //绘制原来的
+//    i->repaint();
+    qDebug() << "updateNavtexItemList: repaint" << timer.elapsed() << "milliseconds";
 
 }
 

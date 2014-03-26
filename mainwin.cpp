@@ -58,8 +58,9 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     {
         qDebug()<<"open tts failed";
     }
-    db_init();
 
+
+    db_init();
 
     pnl_info->updateNavtexItemList(0);
     setLayout(stacklayout);
@@ -72,7 +73,7 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
 MainWin::~MainWin()
 {
     db_close();
-    navtexitemlist.clear();
+    itemlist.clear();
 }
 
 void MainWin::keyPressEvent( QKeyEvent *event )
@@ -101,27 +102,13 @@ void MainWin::keyPressEvent( QKeyEvent *event )
    case KEY_DATA:pnl_info->rb_show_all();break;
    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
 //panel_item按下【查看】按钮
 //检查数据库记录是否已读
 //切换至panel_detail
- void MainWin::btnViewClick(NAVTEXITEM *item)
+ void MainWin::btnViewClick(ITEM_DATA *item)
  {
     if(item->fRead==0)  //尚未閱讀，更新數據庫
     {
@@ -141,7 +128,7 @@ void MainWin::keyPressEvent( QKeyEvent *event )
 // int fRead;
 // int BER;
 
- void MainWin::btnTTSClick(NAVTEXITEM *item)
+ void MainWin::btnTTSClick(ITEM_DATA *item)
  {
      QString info;
      QByteArray ba_info;

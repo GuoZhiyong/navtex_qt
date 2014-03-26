@@ -2,10 +2,14 @@
 #include <QtSql>
 
 #include <QMap>
+#include "panel_item.h"
 
 static QSqlDatabase dbconn;            //存储数据库访问的实例
 
-QList<NAVTEXITEM *> navtexitemlist;
+//QList<NAVTEXITEM *> navtexitemlist;
+
+QList<QWidget *> itemlist;
+
 int navtexitemlist_pos=-1;
 
 
@@ -108,22 +112,25 @@ void db_init(void)
 
     /*添加数据*/
     int index=0;
-    NAVTEXITEM *pnavtexitem;
+    ITEM_DATA *item_data;
+    panel_item *pitem;
     QSqlQuery query;
     query.exec("select * from Informations");
     while(query.next())
     {
-        pnavtexitem = new NAVTEXITEM;
-        pnavtexitem->id = query.value(0).toInt();  //对应数据库的id
-        pnavtexitem->code=query.value(2).toString();   //技术编码
-        pnavtexitem->chn=query.value(3).toInt();    //使用通道
-        pnavtexitem->Broadcast=query.value(1).toString();
-        pnavtexitem->Receive=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-        pnavtexitem->Content=query.value(9).toString();
-        pnavtexitem->fRead=query.value(7).toInt();
-        pnavtexitem->BER=query.value(8).toInt();
-        pnavtexitem->index=index;
-        navtexitemlist<<pnavtexitem;
+        item_data = new ITEM_DATA;
+        item_data->id = query.value(0).toInt();  //对应数据库的id
+        item_data->code=query.value(2).toString();   //技术编码
+        item_data->chn=query.value(3).toInt();    //使用通道
+        item_data->Broadcast=query.value(1).toString();
+        item_data->Receive=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+        item_data->Content=query.value(9).toString();
+        item_data->fRead=query.value(7).toInt();
+        item_data->BER=query.value(8).toInt();
+        //item_data->index=index;
+        pitem= new panel_item(index,item_data);
+        itemlist<<pitem;
+//        index++;
     }
 }
 

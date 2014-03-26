@@ -7,15 +7,15 @@ QPixmap panel_item::pix_unlock=0;
 
 
 
-panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent)
+panel_item::panel_item(int i,ITEM_DATA *item_data, QWidget *parent) : QWidget(parent)
 {
-    itemvalue=item;
+    itemvalue=item_data;
     index=i;
 
-    lbl_time_broadcast = new QLabel(item->Broadcast);
+    lbl_time_broadcast = new QLabel(itemvalue->Broadcast);
     lbl_time_broadcast->setFont(QFont("Kaiti",12));
 
-    lbl_time_receive = new QLabel(item->Receive);
+    lbl_time_receive = new QLabel(itemvalue->Receive);
     lbl_time_receive->setFont(QFont("Kaiti",12));
 
     vlayout = new QVBoxLayout();
@@ -24,7 +24,7 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
     vlayout->setContentsMargins(0,0,0,0);
 
 
-    lbl_code = new QLabel(item->code);
+    lbl_code = new QLabel(itemvalue->code);
     lbl_code->setFont(QFont("Kaiti",22,QFont::Bold));
 
     pix_lock.load(":/res/lock_16.png");
@@ -33,7 +33,7 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
     lbl_lock = new QLabel;
     lbl_lock->setPixmap(pix_lock);
 
-    lbl_chn = new QLabel("486");
+    lbl_chn = new QLabel(QString::number(itemvalue->chn,10));
     lbl_chn->setFont(QFont("kaiti",10,QFont::Bold));
 
     QHBoxLayout *hb1=new QHBoxLayout;
@@ -47,7 +47,7 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
     vb1->setContentsMargins(0,0,0,0);
 
     btn_view = new QPushButton();
-    if(item->fRead)
+    if(itemvalue->fRead)
     {
         btn_view->setIcon(QIcon(":/res/mail_1_open.png"));
     }

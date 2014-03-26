@@ -28,8 +28,8 @@ public:
     static MainWin* instance() {return INSTANCE;}
 
     void setStackIndex(int);
-    void btnViewClick(NAVTEXITEM *item); //panel_item 查看按鈕按下
-    void btnTTSClick(NAVTEXITEM *item);
+    void btnViewClick(ITEM_DATA *item); //panel_item 查看按鈕按下
+    void btnTTSClick(ITEM_DATA *item);
 
 protected:
     void keyPressEvent(QKeyEvent *);

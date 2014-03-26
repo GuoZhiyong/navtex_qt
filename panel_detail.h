@@ -17,9 +17,9 @@ class panel_detail : public QWidget
     
 public:
     explicit panel_detail(QWidget *parent = 0);
-    void setcontent(NAVTEXITEM *i);
+    void setcontent(ITEM_DATA *i);
     ~panel_detail();
-    NAVTEXITEM *item;
+    ITEM_DATA *item;
     
 private:
     Ui::panel_detail *ui;

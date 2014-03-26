@@ -15,23 +15,24 @@
 #include "panel_info.h"
 #include "common.h"
 
+
 class panel_item : public QWidget
 {
     Q_OBJECT
     
 public:
     explicit panel_item(QWidget *parent = 0);
-    explicit panel_item(int i,NAVTEXITEM *item,QWidget *parent = 0);
+    explicit panel_item(int i,ITEM_DATA *item_data,QWidget *parent = 0);
     ~panel_item();
 
     static QPixmap pix_lock;
     static QPixmap pix_unlock;
 
     int index;                 //自己添加的id,对应flowlayout中的位置，从0开始
-    NAVTEXITEM *itemvalue;     //保留对应的list
+    ITEM_DATA *itemvalue;     //保留对应的list
 signals:
-    void viewClick(NAVTEXITEM *itemvalue); //按下view发送的信号，也可同tts一同发送
-    void ttsClick(NAVTEXITEM *itemvalue);
+    void viewClick(ITEM_DATA *itemvalue); //按下view发送的信号，也可同tts一同发送
+    void ttsClick(ITEM_DATA *itemvalue);
 protected:
     void paintEvent(QPaintEvent *event);//重绘事件处理
 private:

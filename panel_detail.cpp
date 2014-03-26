@@ -10,7 +10,7 @@ panel_detail::panel_detail(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void panel_detail::setcontent(NAVTEXITEM *i)
+void panel_detail::setcontent(ITEM_DATA *i)
 {
     item=i;
     QString str=item->code;

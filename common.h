@@ -4,6 +4,9 @@
 #include <QString>
 #include <QList>
 #include <QMap>
+#include <QWidget>
+
+
 
 #define KEY_CHN     0
 #define KEY_PGUP    1
@@ -32,12 +35,9 @@
 #define KEY_CLEAR    24  //消警
 
 
-
-
 typedef struct _NavtexItem
 {
     int id;     //数据库的id,会根据选择的不同而改变
-    int index;  //在flowlayout中显示的位置,从0开始
     QString code;   //技术编码
     int chn;    //使用通道
     QString Broadcast;
@@ -45,11 +45,14 @@ typedef struct _NavtexItem
     QString Content;
     int fRead;
     int BER;
-}NAVTEXITEM;
+}ITEM_DATA;
 
 
+//#include "panel_item.h"
+//extern QList<NAVTEXITEM *> navtexitemlist;
 
-extern QList<NAVTEXITEM *> navtexitemlist;
+extern QList<QWidget *> itemlist;
+
 extern int navtexitemlist_pos;
 
 extern QString sl_site[];
