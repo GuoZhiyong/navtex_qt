@@ -24,8 +24,9 @@ public:
 private:
     QPushButton *btn_ret;
     QPushButton *btn_default;
+    QPushButton *btn_save;
 
-    QPushButton *btn_timeset;  //时间设置
+
     QSpinBox *sb_year;
     QSpinBox *sb_month;
     QSpinBox *sb_day;
@@ -33,17 +34,13 @@ private:
     QSpinBox *sb_minute;
     QSpinBox *sb_second;
 
-    QPushButton *btn_chnset;   //通道设置
-    QPushButton *btn_toneset;  //提示音设置
-    QPushButton *btn_backlight; //背光设置
-
-    QPushButton btn_keytone;
     QCheckBox *cb_keytone;
     QSpinBox *sb_keytone; //按键音
+    QSpinBox *sb_keytone_level; //按键音大小
 
-    QPushButton btn_hinttone;
     QCheckBox *cb_hinttone;
     QSpinBox *sb_hinttone; //提示音
+    QSpinBox *sb_hinttone_level; //提示音大小
 
 
     QCheckBox *cb_autotts;
@@ -52,12 +49,21 @@ private:
 
     QPushButton *btn_db_backup;
     QPushButton *btn_db_export;
+    QPushButton *btn_sys_upgrade;
 
-
+protected:
+    void paintEvent(QPaintEvent *event);//重绘事件处理
 
 private slots:
+    void on_sb_keytone_valueChanged(int);
+    void on_sb_keytone_level_valueChanged(int);
+    void on_sb_hinttone_valueChanged(int);
+    void on_sb_hinttone_level_valueChanged(int);
+    void on_combo_backlight_currentIndexChanged(int);
+
     void on_btn_ret_clicked();
     void on_btn_default_clicked();
+    void on_btn_save_clicked();
 
 };
 

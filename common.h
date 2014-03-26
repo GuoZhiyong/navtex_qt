@@ -64,6 +64,11 @@ void db_init(void);
 void db_close(void);
 
 
-
+extern int keytone;
+extern int keytone_level;
+extern int hinttone;
+extern int hinttone_level;
+extern int tts_volume;
+extern int backlight;
 
 #endif // NAVTEXITEM_H

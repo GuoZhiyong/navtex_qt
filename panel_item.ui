@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>314</width>
-    <height>47</height>
+    <width>296</width>
+    <height>50</height>
    </rect>
   </property>
   <property name="font">
@@ -18,7 +18,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -26,24 +26,64 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <widget class="Line" name="line">
+     <property name="lineWidth">
+      <number>2</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normalon>:/res/mail_1_close.png</normalon>
+      </iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
      <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string/>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <property name="icon">
-        <iconset>
-         <normalon>:/res/mail_1_close.png</normalon>
-        </iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-      </widget>
+       <item>
+        <widget class="QLabel" name="lbl_lock">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="res.qrc">:/res/lock_16.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbl_chn">
+         <property name="text">
+          <string>486</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -59,71 +99,63 @@
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="spacing">
-        <number>0</number>
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
        </property>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;2014-04-23 15:13:56&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <family>KaiTi</family>
-           <pointsize>12</pointsize>
-           <kerning>true</kerning>
-          </font>
-         </property>
-         <property name="text">
-          <string>2014-05-22 13:14:25</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;2014-04-23 15:13:56&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <family>KaiTi</family>
+         <pointsize>12</pointsize>
+         <kerning>true</kerning>
+        </font>
+       </property>
        <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normalon>:/res/spk_blue_on.png</normalon>
-        </iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
+        <string>2014-05-22 13:14:25</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="Line" name="line">
-     <property name="lineWidth">
-      <number>2</number>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string/>
      </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+     <property name="icon">
+      <iconset>
+       <normalon>:/res/spk_blue_on.png</normalon>
+      </iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

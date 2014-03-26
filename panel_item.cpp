@@ -1,6 +1,12 @@
 #include "panel_item.h"
 #include "mainwin.h"
 
+//静态成员函数
+QPixmap panel_item::pix_lock=0;
+QPixmap panel_item::pix_unlock=0;
+
+
+
 panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent)
 {
     itemvalue=item;
@@ -21,6 +27,25 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
     lbl_code = new QLabel(item->code);
     lbl_code->setFont(QFont("Kaiti",22,QFont::Bold));
 
+    pix_lock.load(":/res/lock_16.png");
+    pix_unlock.load(":/res/unlock_16.png");
+
+    lbl_lock = new QLabel;
+    lbl_lock->setPixmap(pix_lock);
+
+    lbl_chn = new QLabel("486");
+    lbl_chn->setFont(QFont("kaiti",10,QFont::Bold));
+
+    QHBoxLayout *hb1=new QHBoxLayout;
+    hb1->addWidget(lbl_lock);
+    hb1->addWidget(lbl_chn);
+    hb1->setContentsMargins(0,0,0,0);
+
+    QVBoxLayout *vb1=new QVBoxLayout;
+    vb1->addLayout(hb1);
+    vb1->addWidget(lbl_code);
+    vb1->setContentsMargins(0,0,0,0);
+
     btn_view = new QPushButton();
     if(item->fRead)
     {
@@ -40,7 +65,7 @@ panel_item::panel_item(int i,NAVTEXITEM *item, QWidget *parent) : QWidget(parent
 
     hlayout = new QHBoxLayout;
     hlayout->addWidget(btn_view);
-    hlayout->addWidget(lbl_code);
+    hlayout->addLayout(vb1);
     hlayout->addLayout(vlayout);
     hlayout->addWidget(btn_tts);
     hlayout->setContentsMargins(0,0,0,0);

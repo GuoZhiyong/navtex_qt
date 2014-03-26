@@ -90,6 +90,8 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     show();
 }
 //按键事件处理
+
+/*
 void panel_info::keyPressEvent( QKeyEvent *event )
 {
     QByteArray ba;
@@ -122,7 +124,7 @@ void panel_info::keyPressEvent( QKeyEvent *event )
     }
 
 }
-
+*/
 
 //重绘自己的item，擦除原来了，绘制新的actived
 void panel_info::myDrawItem(int index)
@@ -145,11 +147,14 @@ panel_info::~panel_info()
 void panel_info::clear() const
 {
      QLayoutItem *item;
+     QElapsedTimer timer;
+     timer.start();
      while ((item = leftlayout->takeAt(0)))
      {
          delete item->widget();  //删除item绑定的Widget
          leftlayout->removeItem(item);
      }
+     qDebug() << "clear:" << timer.elapsed() << "milliseconds";
 }
 
 
@@ -267,23 +272,27 @@ void panel_info::on_btn_exit_clicked()
 
 void panel_info::rb_show_486()
 {
+    rb_486->setChecked(true);
     updateNavtexItemList(486);
 }
 
 void panel_info::rb_show_518()
 {
+    rb_518->setChecked(true);
     //MainWin::instance()->add_pnl_info_item(518);
     updateNavtexItemList(518);
 }
 
 void panel_info::rb_show_4209()
 {
+    rb_4209->setChecked(true);
     //MainWin::instance()->add_pnl_info_item(4209);
     updateNavtexItemList(4209);
 }
 
 void panel_info::rb_show_all()
 {
+    rb_all->setChecked(true);
     //MainWin::instance()->add_pnl_info_item(0);
     updateNavtexItemList(0);
 }

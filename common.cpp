@@ -21,6 +21,19 @@ QMap<QString,QString> qmap_site;
 QMap<QString,QString> qmap_infotype;
 
 
+
+int keytone=1;   //sound101-sound125
+int keytone_level=5;
+
+int hinttone=1;
+int hinttone_level=5;
+
+int tts_volume=5;
+int backlight=10;
+
+
+
+
 int tts_fd=-1;
 
 

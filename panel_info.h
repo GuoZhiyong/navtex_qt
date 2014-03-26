@@ -26,7 +26,7 @@ class panel_info : public QWidget
 public:
     explicit panel_info(QWidget *parent = 0);
     ~panel_info();
-    void keyPressEvent(QKeyEvent  *event);
+    //void keyPressEvent(QKeyEvent  *event);
     void myDrawItem(int index);
     void addNavtexItem(QWidget *);
     void clear() const;
@@ -40,7 +40,7 @@ public slots:
     void rb_show_518();
     void rb_show_4209();
     void rb_show_all();
-private slots:
+
     void on_btn_view_clicked();
     void on_btn_prev_clicked();
     void on_btn_next_clicked();

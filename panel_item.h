@@ -24,6 +24,9 @@ public:
     explicit panel_item(int i,NAVTEXITEM *item,QWidget *parent = 0);
     ~panel_item();
 
+    static QPixmap pix_lock;
+    static QPixmap pix_unlock;
+
     int index;                 //自己添加的id,对应flowlayout中的位置，从0开始
     NAVTEXITEM *itemvalue;     //保留对应的list
 signals:
@@ -32,10 +35,15 @@ signals:
 protected:
     void paintEvent(QPaintEvent *event);//重绘事件处理
 private:
+//    static QPixmap pix_lock;
+//    static QPixmap pix_unlock;
 
     QLabel *lbl_time_broadcast;
     QLabel *lbl_time_receive;
     QLabel *lbl_code;
+    QLabel *lbl_lock;
+    QLabel *lbl_chn;
+
     QPushButton *btn_view;
     QPushButton *btn_tts;
     QFrame *line;

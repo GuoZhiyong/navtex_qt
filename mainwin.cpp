@@ -77,7 +77,44 @@ MainWin::~MainWin()
 
 void MainWin::keyPressEvent( QKeyEvent *event )
 {
+   char buf[21]={0xfd,0x00,0x12,0x01,0x00,'[','v','0',']','[','x','1',']','s','o','u','n','d','1','0','0'};
    qDebug()<<"MainWin type "<<event->type()<<" key "<<event->key();
+
+   if(tts_fd)
+   {
+      buf[7]+=hinttone_level;
+      buf[19]+=hinttone/10;
+      buf[20]+=hinttone%10;
+      ::write(tts_fd,buf,21);
+   }
+
+   switch(event->key())
+   {
+   case KEY_UP:
+   case KEY_LEFT:  pnl_info->on_btn_prev_clicked();break;
+   case KEY_DOWN:
+   case KEY_RIGHT: pnl_info->on_btn_next_clicked();break;
+   case KEY_OK: pnl_info->on_btn_view_clicked();break;
+   case KEY_486: pnl_info->rb_show_486(); break;
+   case KEY_518: pnl_info->rb_show_518(); break;
+   case KEY_4209:pnl_info->rb_show_4209(); break;
+   case KEY_DATA:pnl_info->rb_show_all();break;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

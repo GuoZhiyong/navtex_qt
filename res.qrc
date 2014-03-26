@@ -8,5 +8,7 @@
         <file>res/navtex.png</file>
         <file>res/checkbox_on.png</file>
         <file>res/checkbox_off.png</file>
+        <file>res/lock_16.png</file>
+        <file>res/unlock_16.png</file>
     </qresource>
 </RCC>
