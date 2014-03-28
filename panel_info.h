@@ -32,6 +32,8 @@ public:
     void clear() const;
     void updateNavtexItemList(int chn);
 
+    FlowLayout *leftlayout;             //主布局管理器，用来访问单个的panel_item
+
 public slots:
     void serialport_rx(QByteArray bytes);
     void showTime();
@@ -51,7 +53,7 @@ public slots:
 private:
     QHBoxLayout *mainlayout;
 
-    FlowLayout *leftlayout;             //主布局管理器，用来访问单个的panel_item
+
     QScrollArea *scrollarea;
     QWidget *scrollwidget;
 

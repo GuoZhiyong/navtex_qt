@@ -95,7 +95,7 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
 void panel_info::keyPressEvent( QKeyEvent *event )
 {
     QByteArray ba;
-    if(tts_fd)
+    if(fd_tts)
     {
         ba.resize(5);
         ba[0]=0xfd;
@@ -104,9 +104,9 @@ void panel_info::keyPressEvent( QKeyEvent *event )
         ba.append("[x1]sound101");
         ba[1]=(ba.size()-3)>>8;
         ba[2]=(ba.size()-3)&0xFF;
-        if(tts_fd)
+        if(fd_tts)
         {
-            ::write(tts_fd,ba,ba.size());
+            ::write(fd_tts,ba,ba.size());
         }
     }
     qDebug()<<"panel_info type "<<event->type()<<" key "<<event->key();

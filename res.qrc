@@ -10,5 +10,6 @@
         <file>res/checkbox_off.png</file>
         <file>res/lock_16.png</file>
         <file>res/unlock_16.png</file>
+        <file>res/712.png</file>
     </qresource>
 </RCC>

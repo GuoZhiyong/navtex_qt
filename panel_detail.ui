@@ -32,6 +32,14 @@
      </property>
      <item row="1" column="3">
       <widget class="QLabel" name="lbl_ber">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>误码率</string>
        </property>
@@ -39,6 +47,14 @@
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>始发时间</string>
        </property>
@@ -51,6 +67,14 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
        </property>
        <property name="text">
         <string>播报</string>
@@ -65,6 +89,14 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>返回</string>
        </property>
@@ -72,6 +104,14 @@
      </item>
      <item row="2" column="1" colspan="4">
       <widget class="QLabel" name="lbl_broadcast">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -79,6 +119,14 @@
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>接收时间</string>
        </property>
@@ -127,6 +175,14 @@
      </item>
      <item row="0" column="3">
       <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>通道</string>
        </property>
@@ -161,6 +217,14 @@
      </item>
      <item row="3" column="1" colspan="4">
       <widget class="QLabel" name="lbl_receive">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -168,6 +232,14 @@
      </item>
      <item row="1" column="1">
       <widget class="QLabel" name="lbl_infotype">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="text">
         <string>气象信息</string>
        </property>
@@ -175,6 +247,14 @@
      </item>
      <item row="4" column="0" colspan="7">
       <widget class="QTextEdit" name="txt_info">
+       <property name="font">
+        <font>
+         <pointsize>24</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="verticalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOn</enum>
        </property>

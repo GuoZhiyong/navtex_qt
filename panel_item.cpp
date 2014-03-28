@@ -102,7 +102,7 @@ void panel_item::focusInEvent(QFocusEvent *evt)
 
 void panel_item::focusOutEvent(QFocusEvent *evt)
 {
-    qDebug()<<itemvalue->code<<"focus out";
+    qDebug()<<itemvalue->code<<"focus out reason"<<evt->reason();
     QPalette pal;//=palette();
     setAutoFillBackground(true);
     pal.setColor(QPalette::Window,pal.color(QPalette::Window));  /*默认的颜色*/

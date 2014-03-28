@@ -11,10 +11,10 @@ class QStackedLayout;
 class panel_control;
 class panel_info;
 class panel_setup;
-class panel_serial;
 class panel_detail;
 class panel_about;
 
+class QextSerialPort;
 
 class MainWin : public QWidget
 {
@@ -35,13 +35,26 @@ protected:
     void keyPressEvent(QKeyEvent *);
 signals:
 
+private slots:
+    void on_stacklayout_currentChanged(int index);
+    void onReadyRead();
+    void on_tmr_lcd_backlight_timeout();
+    void on_tmr_keypad_backlight_timeout();
+
+
+
 private:
     QStackedLayout *stacklayout;
     panel_info *pnl_info;
     panel_setup *pnl_setup;
-    panel_serial *pnl_serial;
     panel_detail *pnl_detail;
     panel_about *pnl_about;
+
+    QextSerialPort *serialport;
+    QTimer *tmr_keypad_backlight;  //按键板的背光
+    QTimer *tmr_lcd_backlight;     //LCD的背光
+
+
 
 };
 

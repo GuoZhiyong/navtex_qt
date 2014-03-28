@@ -261,12 +261,12 @@ void panel_setup::on_sb_keytone_valueChanged(int value)
 {
     char buf[21]={0xfd,0x00,0x12,0x01,0x00,'[','v','0',']','[','x','1',']','s','o','u','n','d','1','0','0'};
     keytone=value;
-    if(tts_fd)
+    if(fd_tts)
     {
        buf[7]+=keytone_level;
        buf[19]+=keytone/10;
        buf[20]+=keytone%10;
-       ::write(tts_fd,buf,21);
+       ::write(fd_tts,buf,21);
     }
 }
 //按键音的音量
@@ -274,12 +274,12 @@ void panel_setup::on_sb_keytone_level_valueChanged(int value)
 {
     char buf[21]={0xfd,0x00,0x12,0x01,0x00,'[','v','0',']','[','x','1',']','s','o','u','n','d','1','0','0'};
     keytone_level=value;
-    if(tts_fd)
+    if(fd_tts)
     {
        buf[7]+=keytone_level;
        buf[19]+=keytone/10;
        buf[20]+=keytone%10;
-       ::write(tts_fd,buf,21);
+       ::write(fd_tts,buf,21);
     }
 }
 
@@ -289,12 +289,12 @@ void panel_setup::on_sb_hinttone_valueChanged(int value)
     char buf[21]={0xfd,0x00,0x12,0x01,0x00,'[','v','0',']','[','x','1',']','s','o','u','n','d','1','0','0'};
 
     hinttone=value;
-    if(tts_fd)
+    if(fd_tts)
     {
        buf[7]+=hinttone_level;
        buf[19]+=hinttone/10;
        buf[20]+=hinttone%10;
-       ::write(tts_fd,buf,21);
+       ::write(fd_tts,buf,21);
     }
 }
 
@@ -304,17 +304,18 @@ void panel_setup::on_sb_hinttone_level_valueChanged(int value)
     char buf[21]={0xfd,0x00,0x12,0x01,0x00,'[','v','0',']','[','x','1',']','s','o','u','n','d','1','0','0'};
 
     hinttone_level=value;
-    if(tts_fd)
+    if(fd_tts)
     {
        buf[7]+=hinttone_level;
        buf[19]+=hinttone/10;
        buf[20]+=hinttone%10;
-       ::write(tts_fd,buf,21);
+       ::write(fd_tts,buf,21);
     }
 }
 
 void panel_setup::on_combo_backlight_currentIndexChanged(int index)
 {
+    //backlight_lcd=
     qDebug()<<"current index"<<index;
 
 }

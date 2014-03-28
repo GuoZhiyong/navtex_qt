@@ -7,6 +7,9 @@
 #include <QWidget>
 
 
+#define PIN_KEYPAD_BACKLIGHT (32*1+1)  // S3C2410_GPB1
+#define PIN_LCD_BACKLIGHT (32*6+4)   //S3C2410_GPG4
+#define PIN_AUDIO_PA (32*1+8)       //S3c2410_GPB8
 
 #define KEY_CHN     0
 #define KEY_PGUP    1
@@ -62,7 +65,9 @@ extern QMap<QString,QString> qmap_site;
 extern QMap<QString,QString> qmap_infotype;
 
 
-extern int tts_fd;
+extern int fd_tts;
+extern int fd_gpio;
+
 void db_init(void);
 void db_close(void);
 
@@ -72,6 +77,7 @@ extern int keytone_level;
 extern int hinttone;
 extern int hinttone_level;
 extern int tts_volume;
-extern int backlight;
+extern int backlight_lcd;
+extern int backlight_keypad;
 
 #endif // NAVTEXITEM_H

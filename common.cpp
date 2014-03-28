@@ -33,12 +33,15 @@ int hinttone=1;
 int hinttone_level=5;
 
 int tts_volume=5;
-int backlight=10;
+
+int backlight_keypad=5;
+int backlight_lcd=10;
 
 
 
+int fd_tts=-1; //tts操作
+int fd_gpio=-1;  //gpio操作
 
-int tts_fd=-1;
 
 
 //打开数据库
