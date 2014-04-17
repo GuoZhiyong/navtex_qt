@@ -88,6 +88,9 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     tmr_keypad_backlight->setSingleShot(true);
     connect(tmr_keypad_backlight,SIGNAL(timeout()),this,SLOT(on_tmr_keypad_backlight_timeout()));
     tmr_keypad_backlight->start(backlight_keypad*1000);
+
+    setAttribute(Qt::WA_AcceptTouchEvents);
+
 }
 
 
@@ -101,6 +104,55 @@ MainWin::~MainWin()
     }
     delete serialport;
 }
+
+
+
+bool MainWin::event(QEvent *event)
+{
+
+//    int buf[2];
+//    if((event->type()==QEvent::UpdateRequest)||(event->type()==QEvent::Paint))
+//    {
+//        return QWidget::event(event);
+
+//    }
+//qDebug()<<"event:"<<event->type();
+//    switch(event->type())
+//    {
+//        case QEvent::KeyPress:
+//        case QEvent::MouseButtonRelease:
+//        //case QEvent::KeyPress:
+//        buf[0]=PIN_KEYPAD_BACKLIGHT;
+//        buf[1]=1;
+//        ::write(fd_gpio,buf,8); //按键背光亮
+//        tmr_lcd_backlight->start(backlight_lcd*1000);
+
+//        buf[0]=PIN_LCD_BACKLIGHT;
+//        buf[1]=1;
+//        ::write(fd_gpio,buf,8); //LCD背光亮
+//        tmr_keypad_backlight->start(backlight_keypad*1000);
+//        break;
+//    }
+    return QWidget::event(event);
+}
+
+void MainWin::mousePressEvent (QMouseEvent * event)
+{
+//    int buf[2];
+//    buf[0]=PIN_KEYPAD_BACKLIGHT;
+//    buf[1]=1;
+//    ::write(fd_gpio,buf,8); //按键背光亮
+//    tmr_lcd_backlight->start(backlight_lcd*1000);
+
+//    buf[0]=PIN_LCD_BACKLIGHT;
+//    buf[1]=1;
+//    ::write(fd_gpio,buf,8); //LCD背光亮
+//    tmr_keypad_backlight->start(backlight_keypad*1000);
+
+}
+
+
+
 
 void MainWin::keyPressEvent( QKeyEvent *event )
 {

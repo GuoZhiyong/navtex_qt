@@ -18,7 +18,7 @@ void panel_detail::setcontent(ITEM_DATA *i)
     ui->lbl_site->setText(qmap_site[str.mid(0,1)]);
     ui->lbl_infotype->setText(qmap_infotype[str.mid(1,1)]);
     ui->lbl_broadcast->setText(item->Broadcast);
-    ui->txt_info->setText(item->Content);
+    ui->lbl_info->setText(item->Content);
 }
 
 //按下返回键，显示panel_info

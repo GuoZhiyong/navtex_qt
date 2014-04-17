@@ -38,6 +38,8 @@
 #define KEY_CLEAR    24  //消警
 
 
+
+
 typedef struct _NavtexItem
 {
     int id;     //数据库的id,会根据选择的不同而改变

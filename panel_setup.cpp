@@ -26,8 +26,6 @@ panel_setup::panel_setup(QWidget *parent) : QWidget(parent)
 
     //setStyleSheet(mystyle);
 
-
-
     sb_year = new QSpinBox;
     sb_year->setStyleSheet(sb_stylesheet);
     sb_year->setRange(2010,2030);

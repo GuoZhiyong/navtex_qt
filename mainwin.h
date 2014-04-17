@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QKeyEvent>
-
+#include <QMouseEvent>
 
 #include "common.h"
 
@@ -33,6 +33,8 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *);
+    void mousePressEvent (QMouseEvent * event);
+    bool event(QEvent *event);
 signals:
 
 private slots:

@@ -13,7 +13,8 @@ SOURCES += \
     panel_setup.cpp \
     panel_detail.cpp \
     mainwin.cpp \
-    common.cpp
+    common.cpp \
+    eventspy.cpp
 
 HEADERS += \
     FlowLayout.hpp \
@@ -23,7 +24,8 @@ HEADERS += \
     panel_setup.h \
     panel_detail.h \
     mainwin.h \
-    common.h
+    common.h \
+    eventspy.h
 
 RESOURCES += \
     res.qrc
@@ -31,3 +33,5 @@ RESOURCES += \
 FORMS += \
     panel_item.ui \
     panel_detail.ui
+
+TARGET = navtex
