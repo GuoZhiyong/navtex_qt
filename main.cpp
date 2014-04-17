@@ -5,16 +5,9 @@
 #include <QTranslator>
 #include "mainwin.h"
 
-
-#include "eventspy.h"
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
-    EventSpy *spy = new EventSpy;
-    app.installEventFilter(spy);
-
 
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     //QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));

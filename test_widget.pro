@@ -13,8 +13,7 @@ SOURCES += \
     panel_setup.cpp \
     panel_detail.cpp \
     mainwin.cpp \
-    common.cpp \
-    eventspy.cpp
+    common.cpp
 
 HEADERS += \
     FlowLayout.hpp \
@@ -24,8 +23,7 @@ HEADERS += \
     panel_setup.h \
     panel_detail.h \
     mainwin.h \
-    common.h \
-    eventspy.h
+    common.h
 
 RESOURCES += \
     res.qrc

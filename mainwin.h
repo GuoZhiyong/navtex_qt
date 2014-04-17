@@ -40,10 +40,6 @@ signals:
 private slots:
     void on_stacklayout_currentChanged(int index);
     void onReadyRead();
-    void on_tmr_lcd_backlight_timeout();
-    void on_tmr_keypad_backlight_timeout();
-
-
 
 private:
     QStackedLayout *stacklayout;
@@ -53,10 +49,6 @@ private:
     panel_about *pnl_about;
 
     QextSerialPort *serialport;
-    QTimer *tmr_keypad_backlight;  //按键板的背光
-    QTimer *tmr_lcd_backlight;     //LCD的背光
-
-
 
 };
 

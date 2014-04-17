@@ -79,16 +79,6 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     pnl_info->updateNavtexItemList(0);
     stacklayout->setCurrentIndex(0);
 
-    tmr_lcd_backlight= new QTimer(this);
-    tmr_lcd_backlight->setSingleShot(true);
-    connect(tmr_lcd_backlight,SIGNAL(timeout()),this,SLOT(on_tmr_lcd_backlight_timeout()));
-    tmr_lcd_backlight->start(backlight_lcd*1000);
-
-    tmr_keypad_backlight= new QTimer(this);
-    tmr_keypad_backlight->setSingleShot(true);
-    connect(tmr_keypad_backlight,SIGNAL(timeout()),this,SLOT(on_tmr_keypad_backlight_timeout()));
-    tmr_keypad_backlight->start(backlight_keypad*1000);
-
     setAttribute(Qt::WA_AcceptTouchEvents);
 
 }
@@ -170,20 +160,6 @@ void MainWin::keyPressEvent( QKeyEvent *event )
         }
     }
 
-    if(fd_gpio)
-    {
-        int buf[2];
-        buf[0]=PIN_KEYPAD_BACKLIGHT;
-        buf[1]=1;
-        ::write(fd_gpio,buf,8); //按键背光亮
-        tmr_lcd_backlight->start(backlight_lcd*1000);
-
-        buf[0]=PIN_LCD_BACKLIGHT;
-        buf[1]=1;
-        ::write(fd_gpio,buf,8); //LCD背光亮
-        tmr_keypad_backlight->start(backlight_keypad*1000);
-
-    }
 
     //根据界面判断按键还是根据按键判断界面
 
@@ -380,28 +356,4 @@ void MainWin::onReadyRead()
 
 }
 
-//LCD背光超时
-void MainWin::on_tmr_lcd_backlight_timeout()
-{
-    if(fd_gpio)
-    {
-        int buf[2];
-        buf[0]=PIN_LCD_BACKLIGHT;
-        buf[1]=0;
-        ::write(fd_gpio,buf,8); //LCD背光灭
 
-
-    }
-}
-
-//按键板背光超时
-void MainWin::on_tmr_keypad_backlight_timeout()
-{
-    if(fd_gpio)
-    {
-        int buf[2];
-        buf[0]=PIN_KEYPAD_BACKLIGHT;
-        buf[1]=0;
-        ::write(fd_gpio,buf,8); //按键背光灭
-    }
-}
