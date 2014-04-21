@@ -92,12 +92,16 @@ panel_setup::panel_setup(QWidget *parent) : QWidget(parent)
     sb_keytone->setStyleSheet(sb_stylesheet);
     sb_keytone->setRange(1,25);
     sb_keytone->setPrefix(tr("按键音"));
+//    sb_keytone->setValue(keytone);
     QObject::connect(sb_keytone,SIGNAL(valueChanged(int)),this,SLOT(on_sb_keytone_valueChanged(int)));
+
+
 
     sb_keytone_level = new QSpinBox;
     sb_keytone_level->setStyleSheet(sb_stylesheet);
     sb_keytone_level->setRange(0,9);
     sb_keytone_level->setPrefix(tr("按键音量"));
+//    sb_keytone_level->setValue(keytone_level);
     QObject::connect(sb_keytone_level,SIGNAL(valueChanged(int)),this,SLOT(on_sb_keytone_level_valueChanged(int)));
 
 
@@ -108,20 +112,18 @@ panel_setup::panel_setup(QWidget *parent) : QWidget(parent)
     hl_1->addStretch(0);
     hl_1->setSpacing(20);
 //提示音设置
-//    cb_hinttone = new QCheckBox(tr("提  示  音"));
-//    cb_hinttone->setStyleSheet(cb_stylesheet);
-//    cb_hinttone->setLayoutDirection(Qt::RightToLeft);
-
     sb_hinttone = new QSpinBox;
     sb_hinttone->setStyleSheet(sb_stylesheet);
     sb_hinttone->setRange(1,25);
     sb_hinttone->setPrefix(tr("提示音"));
+//    sb_hinttone->setValue(hinttone);
     QObject::connect(sb_hinttone,SIGNAL(valueChanged(int)),this,SLOT(on_sb_hinttone_valueChanged(int)));
 
     sb_hinttone_level = new QSpinBox;
     sb_hinttone_level->setStyleSheet(sb_stylesheet);
     sb_hinttone_level->setRange(0,9);
     sb_hinttone_level->setPrefix(tr("提示音量"));
+//    sb_hinttone_level->setValue(hinttone_level);
     QObject::connect(sb_hinttone_level,SIGNAL(valueChanged(int)),this,SLOT(on_sb_hinttone_level_valueChanged(int)));
 
 
@@ -139,7 +141,7 @@ panel_setup::panel_setup(QWidget *parent) : QWidget(parent)
     sb_volum->setStyleSheet(sb_stylesheet);
     sb_volum->setRange(1,11);
     sb_volum->setPrefix(tr(" 音量 "));
-    sb_volum->setValue(5);
+//    sb_volum->setValue(tts_volume);
 
     QHBoxLayout *hl_3 = new QHBoxLayout;
     hl_3->addWidget(cb_autotts);
@@ -152,7 +154,7 @@ panel_setup::panel_setup(QWidget *parent) : QWidget(parent)
     lbl_backlight->setFont(QFont("kaiti",20));
     combo_backlight =  new QComboBox;
     combo_backlight->setStyleSheet("QComboBox {font-size:24px;}");
-    combo_backlight->addItem(tr("常亮"),QVariant(0));
+    combo_backlight->addItem(tr("常亮"),QVariant(0xFFFFFFFF));
     combo_backlight->addItem(tr("10秒没有操作"),QVariant(10));
     combo_backlight->addItem(tr("30秒没有操作"),QVariant(30));
     combo_backlight->addItem(tr("1分钟没有操作"),QVariant(60));
@@ -222,13 +224,34 @@ panel_setup::panel_setup(QWidget *parent) : QWidget(parent)
     mainlayout->addLayout(vbox_left);
     mainlayout->addLayout(vbox_right);
     setLayout(mainlayout);
-    show();
+ //   show();
 }
 
 panel_setup::~panel_setup()
 {
 
 }
+
+
+void panel_setup::load_param()
+{
+    sb_keytone->setValue(keytone);
+    sb_keytone_level->setValue(keytone_level);
+    sb_hinttone->setValue(hinttone);
+    sb_hinttone_level->setValue(hinttone_level);
+    sb_volum->setValue(tts_volume);
+
+    for(int i=0;i<combo_backlight->count();i++)
+    {
+        if(backlight_lcd==combo_backlight->itemData(i,Qt::UserRole).toInt())
+        {
+            combo_backlight->setCurrentIndex(i);
+            break;
+        }
+    }
+
+}
+
 
 
 void panel_setup::paintEvent(QPaintEvent*)
@@ -241,17 +264,34 @@ void panel_setup::paintEvent(QPaintEvent*)
 
 void panel_setup::on_btn_ret_clicked()
 {
+    qDebug()<<"keytone"<<keytone;
+    qDebug()<<"keytone_level"<<keytone_level;
+    qDebug()<<"hinttone"<<hinttone;
+    qDebug()<<"hinetone_level"<<hinttone_level;
     MainWin::instance()->setStackIndex(0);
 }
 
 
 void panel_setup::on_btn_default_clicked()
 {
+    keytone=1;   //sound101-sound125
+    sb_keytone->setValue(keytone);
+    keytone_level=5;
+    sb_keytone_level->setValue(keytone_level);
+    hinttone=1;
+    sb_hinttone->setValue(hinttone);
+    hinttone_level=5;
+    sb_hinttone_level->setValue(hinttone_level);
+    tts_volume=5;
+    sb_volum->setValue(tts_volume);
 
+    backlight_lcd=30;
+    combo_backlight->setCurrentIndex(2);
 }
 
 void panel_setup::on_btn_save_clicked()
 {
+    config_write();
 }
 
 //按键音的类型
@@ -313,7 +353,18 @@ void panel_setup::on_sb_hinttone_level_valueChanged(int value)
 
 void panel_setup::on_combo_backlight_currentIndexChanged(int index)
 {
-    //backlight_lcd=
-    qDebug()<<"current index"<<index;
-
+    backlight_lcd=combo_backlight->itemData(index,Qt::UserRole).toInt();
+    qDebug()<<"backlight_lcd="<<backlight_lcd;
+//    switch(index)
+//    {
+//        case 0:backlight_lcd=0xFFFFFFFF;break;
+//        case 1:backlight_lcd=10;break;
+//        case 2:backlight_lcd=30;break;
+//        case 3:backlight_lcd=60;break;
+//        case 4:backlight_lcd=300;break;
+//        case 5:backlight_lcd=600;break;
+//    }
 }
+
+
+

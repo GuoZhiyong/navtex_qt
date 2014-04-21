@@ -21,6 +21,8 @@ public:
     explicit panel_setup(QWidget *parent = 0);
     ~panel_setup();
 
+    void load_param();
+
 private:
     QPushButton *btn_ret;
     QPushButton *btn_default;

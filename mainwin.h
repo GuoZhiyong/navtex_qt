@@ -33,8 +33,8 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *);
-    void mousePressEvent (QMouseEvent * event);
-    bool event(QEvent *event);
+    void mousePressEvent(QMouseEvent *evt);
+   // bool event(QEvent * event);
 signals:
 
 private slots:
@@ -49,6 +49,8 @@ private:
     panel_about *pnl_about;
 
     QextSerialPort *serialport;
+
+
 
 };
 

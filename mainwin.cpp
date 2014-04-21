@@ -4,6 +4,9 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 
+#include <QSettings>
+
+
 #include "FlowLayout.hpp"
 #include "panel_info.h"
 #include "panel_setup.h"
@@ -30,6 +33,20 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     {
         qDebug()<<family;
     }
+
+    fd_tts=::open("/dev/xf5251_drv",O_RDWR);
+    if(fd_tts<0)
+    {
+        qDebug()<<"open tts failed";
+    }
+
+    fd_gpio=::open("/dev/gpio_drv",O_RDWR);
+    if(fd_gpio<0)
+    {
+        qDebug()<<"open gpio_drv failed";
+    }
+
+    config_read();
 
     pnl_info=new panel_info;
     pnl_setup =new panel_setup;
@@ -58,17 +75,6 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
 
     QObject::connect(stacklayout,SIGNAL(currentChanged(int)),this,SLOT(on_stacklayout_currentChanged(int)));
 
-    fd_tts=::open("/dev/xf5251_drv",O_RDWR);
-    if(fd_tts<0)
-    {
-        qDebug()<<"open tts failed";
-    }
-
-    fd_gpio=::open("/dev/gpio_drv",O_RDWR);
-    if(fd_gpio<0)
-    {
-        qDebug()<<"open gpio_drv failed";
-    }
 
 
     setLayout(stacklayout);
@@ -96,58 +102,15 @@ MainWin::~MainWin()
 }
 
 
-
-bool MainWin::event(QEvent *event)
+void MainWin::mousePressEvent(QMouseEvent *evt)
 {
-
-//    int buf[2];
-//    if((event->type()==QEvent::UpdateRequest)||(event->type()==QEvent::Paint))
-//    {
-//        return QWidget::event(event);
-
-//    }
-//qDebug()<<"event:"<<event->type();
-//    switch(event->type())
-//    {
-//        case QEvent::KeyPress:
-//        case QEvent::MouseButtonRelease:
-//        //case QEvent::KeyPress:
-//        buf[0]=PIN_KEYPAD_BACKLIGHT;
-//        buf[1]=1;
-//        ::write(fd_gpio,buf,8); //按键背光亮
-//        tmr_lcd_backlight->start(backlight_lcd*1000);
-
-//        buf[0]=PIN_LCD_BACKLIGHT;
-//        buf[1]=1;
-//        ::write(fd_gpio,buf,8); //LCD背光亮
-//        tmr_keypad_backlight->start(backlight_keypad*1000);
-//        break;
-//    }
-    return QWidget::event(event);
+    qDebug()<<"mouse";
 }
-
-void MainWin::mousePressEvent (QMouseEvent * event)
-{
-//    int buf[2];
-//    buf[0]=PIN_KEYPAD_BACKLIGHT;
-//    buf[1]=1;
-//    ::write(fd_gpio,buf,8); //按键背光亮
-//    tmr_lcd_backlight->start(backlight_lcd*1000);
-
-//    buf[0]=PIN_LCD_BACKLIGHT;
-//    buf[1]=1;
-//    ::write(fd_gpio,buf,8); //LCD背光亮
-//    tmr_keypad_backlight->start(backlight_keypad*1000);
-
-}
-
-
-
 
 void MainWin::keyPressEvent( QKeyEvent *event )
 {
     char buf[21]={0xfd,0x00,0x12,0x01,0x00,'[','v','0',']','[','x','1',']','s','o','u','n','d','1','0','0'};
-    qDebug()<<"MainWin type "<<event->type()<<" key "<<event->key();
+    qDebug()<<"key"<<event->key();
 
     if(fd_tts)
     {
@@ -159,7 +122,6 @@ void MainWin::keyPressEvent( QKeyEvent *event )
             ::write(fd_tts,buf,21);
         }
     }
-
 
     //根据界面判断按键还是根据按键判断界面
 
@@ -337,9 +299,15 @@ void MainWin::on_stacklayout_currentChanged(int index)
     qDebug()<<"stackedlayout change"<<index;
     if(index==0)
     {
-        // (panel_item*)
         (pnl_info->leftlayout->itemAt(navtexitemlist_pos)->widget())->setFocus(Qt::OtherFocusReason);
     }
+    if(index==2) //panel_setup
+    {
+        pnl_setup->load_param();
+    }
+
+
+
 }
 
 
@@ -355,5 +323,4 @@ void MainWin::onReadyRead()
     serialport->read(bytes.data(), bytes.size());
 
 }
-
 

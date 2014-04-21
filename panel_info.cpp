@@ -89,42 +89,7 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     setLayout(mainlayout);
     show();
 }
-//按键事件处理
 
-/*
-void panel_info::keyPressEvent( QKeyEvent *event )
-{
-    QByteArray ba;
-    if(fd_tts)
-    {
-        ba.resize(5);
-        ba[0]=0xfd;
-        ba[3]=0x01;
-        ba[4]=0x00;
-        ba.append("[x1]sound101");
-        ba[1]=(ba.size()-3)>>8;
-        ba[2]=(ba.size()-3)&0xFF;
-        if(fd_tts)
-        {
-            ::write(fd_tts,ba,ba.size());
-        }
-    }
-    qDebug()<<"panel_info type "<<event->type()<<" key "<<event->key();
-    switch(event->key())
-    {
-    case KEY_UP:
-    case KEY_LEFT:  on_btn_prev_clicked();break;
-    case KEY_DOWN:
-    case KEY_RIGHT:  on_btn_next_clicked();break;
-    case KEY_OK: on_btn_view_clicked();break;
-    case KEY_486: rb_486->setChecked(true);rb_show_486(); break;
-    case KEY_518: rb_518->setChecked(true);rb_show_518(); break;
-    case KEY_4209: rb_4209->setChecked(true);rb_show_4209(); break;
-    case KEY_DATA: rb_all->setChecked(true); rb_show_all();break;
-    }
-
-}
-*/
 
 //重绘自己的item，擦除原来了，绘制新的actived
 void panel_info::myDrawItem(int index)
@@ -250,7 +215,7 @@ void panel_info::on_btn_setup_clicked()
 
 void panel_info::on_btn_about_clicked()
 {
-    MainWin::instance()->setStackIndex(4);
+    MainWin::instance()->setStackIndex(3);
 }
 
 void panel_info::on_btn_exit_clicked()

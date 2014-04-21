@@ -70,10 +70,6 @@ extern QMap<QString,QString> qmap_infotype;
 extern int fd_tts;
 extern int fd_gpio;
 
-void db_init(void);
-void db_close(void);
-
-
 extern int keytone;
 extern int keytone_level;
 extern int hinttone;
@@ -81,5 +77,13 @@ extern int hinttone_level;
 extern int tts_volume;
 extern int backlight_lcd;
 extern int backlight_keypad;
+
+
+void db_init(void);
+void db_close(void);
+
+void config_read(void);
+void config_write(void);
+
 
 #endif // NAVTEXITEM_H

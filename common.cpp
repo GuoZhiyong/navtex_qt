@@ -1,6 +1,9 @@
 #include "common.h"
 #include <QtSql>
 
+#include <sys/ioctl.h>
+#include <fcntl.h>
+
 #include <QMap>
 #include "panel_item.h"
 
@@ -35,7 +38,7 @@ int hinttone_level=5;
 int tts_volume=5;
 
 int backlight_keypad=5;
-int backlight_lcd=10;
+int backlight_lcd=30;
 
 
 
@@ -136,6 +139,60 @@ void db_init(void)
 //        index++;
     }
 }
+
+//读取配置信息
+void config_read(void)
+{
+   QSettings *cfg = new QSettings("navtex.ini",QSettings::IniFormat);
+
+   keytone=cfg->value("keytone/id",1).toInt();
+   keytone_level=cfg->value("keytone/level",5).toInt();
+
+   hinttone=cfg->value("hinttone/id",1).toInt();
+   hinttone_level=cfg->value("hinttone/level",5).toInt();
+
+   tts_volume=cfg->value("tts/volume",5).toInt();
+
+   backlight_keypad=cfg->value("backlight/keypad",5).toInt();
+   backlight_lcd=cfg->value("backlight/lcd",30).toInt();
+   if(fd_gpio)
+   {
+       ::ioctl(fd_gpio,0x01,backlight_keypad);
+       ::ioctl(fd_gpio,0x02,backlight_lcd);
+   }
+   qDebug()<<"keytone"<<keytone;
+   qDebug()<<"keytone_level"<<keytone_level;
+   qDebug()<<"hinttone"<<hinttone;
+   qDebug()<<"hinetone_level"<<hinttone_level;
+
+   delete cfg;
+}
+
+void config_write(void)
+{
+   QSettings *cfg = new QSettings("navtex.ini",QSettings::IniFormat);
+
+   cfg->setValue("keytone/id",keytone);
+   cfg->setValue("keytone/level",keytone_level);
+
+   cfg->setValue("hinttone/id",hinttone);
+   cfg->setValue("hinttone/level",hinttone_level);
+
+   cfg->setValue("tts/volume",tts_volume);
+
+   cfg->setValue("backlight/keypad",backlight_keypad);
+   cfg->setValue("backlight/lcd",backlight_lcd);
+   if(fd_gpio)
+   {
+       ::ioctl(fd_gpio,0x01,backlight_keypad);
+       ::ioctl(fd_gpio,0x02,backlight_lcd);
+   }
+   delete cfg;
+}
+
+
+
+
 
 void db_create(void)
 {
