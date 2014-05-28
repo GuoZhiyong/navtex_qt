@@ -75,6 +75,7 @@ extern int keytone_level;
 extern int hinttone;
 extern int hinttone_level;
 extern int tts_volume;
+extern int tts_auto;
 extern int backlight_lcd;
 extern int backlight_keypad;
 
@@ -83,7 +84,7 @@ void db_init(void);
 void db_close(void);
 
 void config_read(void);
-void config_write(void);
+void config_write(int writetofile);
 
 
 #endif // NAVTEXITEM_H

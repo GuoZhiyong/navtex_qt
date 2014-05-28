@@ -17,6 +17,8 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QScrollArea;
 
+class panel_item;
+
 #include "common.h"
 
 class panel_info : public QWidget
@@ -28,14 +30,14 @@ public:
     ~panel_info();
     //void keyPressEvent(QKeyEvent  *event);
     void myDrawItem(int index);
-    void addNavtexItem(QWidget *);
+    void addNavtexItem(panel_item * item);
     void clear() const;
     void updateNavtexItemList(int chn);
+    int current_chn;        //当前显示的通道号
 
     FlowLayout *leftlayout;             //主布局管理器，用来访问单个的panel_item
 
 public slots:
-    void serialport_rx(QByteArray bytes);
     void showTime();
 
     void rb_show_486();

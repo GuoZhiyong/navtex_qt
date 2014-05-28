@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QStackedWidget>
 
 #include "common.h"
 
@@ -30,11 +31,10 @@ public:
     void setStackIndex(int);
     void btnViewClick(ITEM_DATA *item); //panel_item 查看按鈕按下
     void btnTTSClick(ITEM_DATA *item);
-
 protected:
     void keyPressEvent(QKeyEvent *);
-    void mousePressEvent(QMouseEvent *evt);
-   // bool event(QEvent * event);
+    void timerEvent( QTimerEvent *event );
+    int timerid;
 signals:
 
 private slots:
@@ -42,14 +42,15 @@ private slots:
     void onReadyRead();
 
 private:
-    QStackedLayout *stacklayout;
+    QStackedWidget *stacklayout;
     panel_info *pnl_info;
     panel_setup *pnl_setup;
     panel_detail *pnl_detail;
     panel_about *pnl_about;
-
     QextSerialPort *serialport;
 
+    QByteArray ba_serial;
+    void analy_serial_data(QByteArray ba_info);
 
 
 };

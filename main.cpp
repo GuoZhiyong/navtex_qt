@@ -5,6 +5,10 @@
 #include <QTranslator>
 #include "mainwin.h"
 
+#include <sys/ioctl.h>
+#include <fcntl.h>
+
+#include "common.h"
 
 #include "eventspy.h"
 
@@ -12,7 +16,18 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    fd_tts=::open("/dev/xf5251_drv",O_RDWR);
+    if(fd_tts<0)
+    {
+        qDebug()<<"open tts failed";
+    }
 
+    fd_gpio=::open("/dev/gpio_drv",O_RDWR);
+    if(fd_gpio<0)
+    {
+        qDebug()<<"open gpio_drv failed";
+    }
+    ::ioctl(fd_gpio,0x0,0);
 
     EventSpy *spy = new EventSpy;
     app.installEventFilter(spy);

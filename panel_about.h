@@ -18,7 +18,7 @@ public:
 
 private:
     QPushButton *btn_ret;
-    QVBoxLayout *mainlayout;
+    QHBoxLayout *mainlayout;
 
 private slots:
     void on_btn_ret_clicked();

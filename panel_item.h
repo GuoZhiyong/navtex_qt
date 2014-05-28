@@ -22,13 +22,13 @@ class panel_item : public QWidget
     
 public:
     explicit panel_item(QWidget *parent = 0);
-    explicit panel_item(int i,ITEM_DATA *item_data,QWidget *parent = 0);
+    explicit panel_item(ITEM_DATA *item_data,QWidget *parent=0);
     ~panel_item();
 
     static QPixmap pix_lock;
     static QPixmap pix_unlock;
 
-    int index;                 //自己添加的id,对应flowlayout中的位置，从0开始
+    int index;                 //自己添加的id,对应flowlayout中的位置，从0开始,不同的显示中索引不同
     ITEM_DATA *itemvalue;     //保留对应的list
 signals:
     void viewClick(ITEM_DATA *itemvalue); //按下view发送的信号，也可同tts一同发送

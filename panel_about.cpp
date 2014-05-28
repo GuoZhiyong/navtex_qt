@@ -6,16 +6,29 @@
 
 panel_about::panel_about(QWidget *parent) : QWidget(parent)
 {
-    setFont(QFont("wenquanyi micro hei mono",20));
+    setFont(QFont("KaiTi",20));
 
     btn_ret = new QPushButton(tr("返回"));
     QObject::connect(btn_ret,SIGNAL(clicked()),this,SLOT(on_btn_ret_clicked()));
-    mainlayout = new QVBoxLayout;
-    mainlayout->addWidget(btn_ret);
+
+    QLabel *lbl_1= new QLabel(tr("奈伏泰斯(Navtex)接收机"));
+    lbl_1->setAlignment(Qt::AlignHCenter);
+    QLabel *lbl_2= new QLabel(tr("天津七一二通信广播有限公司"));
+    lbl_2->setAlignment(Qt::AlignHCenter);
+
+    QVBoxLayout * lay_left=new QVBoxLayout();
+    lay_left->addWidget(lbl_1);
+    lay_left->addWidget(lbl_2);
+
+    QVBoxLayout * lay_right=new QVBoxLayout();
+    lay_right->addWidget(btn_ret);
+    lay_right->addStretch(0);
+
+
+    mainlayout = new QHBoxLayout;
+    mainlayout->addLayout(lay_left,7);
+    mainlayout->addLayout(lay_right,1);
     setLayout(mainlayout);
-
-
-    show();
 }
 
 panel_about::~panel_about()

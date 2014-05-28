@@ -7,15 +7,15 @@ QPixmap panel_item::pix_unlock=0;
 
 
 
-panel_item::panel_item(int i,ITEM_DATA *item_data, QWidget *parent) : QWidget(parent)
+panel_item::panel_item(ITEM_DATA *item_data, QWidget *parent) : QWidget(parent)
 {
     itemvalue=item_data;
-    index=i;
+    index=0;        //新建的item,还没有放到Flowlayout中
 
     lbl_time_broadcast = new QLabel(itemvalue->Broadcast);
     lbl_time_broadcast->setFont(QFont("Kaiti",12));
 
-    lbl_time_receive = new QLabel(itemvalue->Receive);
+    lbl_time_receive = new QLabel(itemvalue->Receive);   //截短字符串,不顯示秒
     lbl_time_receive->setFont(QFont("Kaiti",12));
 
     vlayout = new QVBoxLayout();
@@ -33,8 +33,9 @@ panel_item::panel_item(int i,ITEM_DATA *item_data, QWidget *parent) : QWidget(pa
     lbl_lock = new QLabel;
     lbl_lock->setPixmap(pix_lock);
 
-    lbl_chn = new QLabel(QString::number(itemvalue->chn,10));
+    lbl_chn=new QLabel(QString("%1").arg(itemvalue->chn,4,10,QLatin1Char(' ')));
     lbl_chn->setFont(QFont("kaiti",10,QFont::Bold));
+    lbl_chn->setStyleSheet("color:blue");
 
     QHBoxLayout *hb1=new QHBoxLayout;
     hb1->addWidget(lbl_lock);
@@ -92,7 +93,7 @@ panel_item::panel_item(int i,ITEM_DATA *item_data, QWidget *parent) : QWidget(pa
 
 void panel_item::focusInEvent(QFocusEvent *evt)
 {
-    qDebug()<<itemvalue->code<<"focus in";
+    //qDebug()<<itemvalue->code<<"focus in";
     navtexitemlist_pos=index;
     QPalette pal;//=palette();
     setAutoFillBackground(true);
@@ -102,7 +103,7 @@ void panel_item::focusInEvent(QFocusEvent *evt)
 
 void panel_item::focusOutEvent(QFocusEvent *evt)
 {
-    qDebug()<<itemvalue->code<<"focus out reason"<<evt->reason();
+    //qDebug()<<itemvalue->code<<"focus out reason"<<evt->reason();
     QPalette pal;//=palette();
     setAutoFillBackground(true);
     pal.setColor(QPalette::Window,pal.color(QPalette::Window));  /*默认的颜色*/

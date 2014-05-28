@@ -5,7 +5,7 @@
 #include <fcntl.h>
 
 #include <QSettings>
-
+#include <QtSql>
 
 #include "FlowLayout.hpp"
 #include "panel_info.h"
@@ -28,23 +28,6 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     INSTANCE = this;
 
     QFontDatabase database;
-    //  database.addApplicationFont("DIGITALDREAMNARROW.ttf");
-    foreach (const QString &family, database.families(QFontDatabase::SimplifiedChinese))
-    {
-        qDebug()<<family;
-    }
-
-    fd_tts=::open("/dev/xf5251_drv",O_RDWR);
-    if(fd_tts<0)
-    {
-        qDebug()<<"open tts failed";
-    }
-
-    fd_gpio=::open("/dev/gpio_drv",O_RDWR);
-    if(fd_gpio<0)
-    {
-        qDebug()<<"open gpio_drv failed";
-    }
 
     config_read();
 
@@ -53,7 +36,7 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     pnl_detail = new panel_detail;
     pnl_about = new panel_about;
 
-    stacklayout=new QStackedLayout();
+    stacklayout=new QStackedWidget(this);
     stacklayout->addWidget(pnl_info);
     stacklayout->addWidget(pnl_detail);
     stacklayout->addWidget(pnl_setup);
@@ -75,9 +58,9 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
 
     QObject::connect(stacklayout,SIGNAL(currentChanged(int)),this,SLOT(on_stacklayout_currentChanged(int)));
 
-
-
-    setLayout(stacklayout);
+    //setLayout(stacklayout);
+    stacklayout->setGeometry(QRect(0,0,800,600));
+    //addWidget(stacklayout);
     setWindowFlags(Qt::FramelessWindowHint);
     resize(800,600);
     //创建完成后再添加数据
@@ -87,11 +70,13 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
 
     setAttribute(Qt::WA_AcceptTouchEvents);
 
+    timerid=startTimer(50);     //50ms定时器，检测电源按键
 }
 
 
 MainWin::~MainWin()
 {
+    if(timerid!=0) killTimer(timerid);
     db_close();
     itemlist.clear();
     if(serialport->isOpen())
@@ -101,16 +86,40 @@ MainWin::~MainWin()
     delete serialport;
 }
 
-
-void MainWin::mousePressEvent(QMouseEvent *evt)
+/*检测电源关机键 GPF2*/
+void MainWin::timerEvent( QTimerEvent *event )
 {
-    qDebug()<<"mouse";
+    unsigned long buf[2]={32*5+2,0};
+    static unsigned int powerkey_timer=0;
+    int ret;
+    if(fd_gpio)
+    {
+        ret=::read(fd_gpio,buf,8);
+        if(ret==0) //按下
+        {
+            ::ioctl(fd_gpio,0x0,0);  //更新显示背光计时
+            powerkey_timer+=50;
+            if(powerkey_timer>=1500) //按下1.5秒 时间有些不准？
+            {
+                if(!(QMessageBox::information(this,tr("退出程序"),tr("<font size=20>确定退出程序吗？</font>"),tr("确认"),tr("取消"))))
+                {
+                    db_close();
+                    QApplication::quit();
+                    //system("reboot");
+                }
+            }
+        }
+        else
+        {
+            powerkey_timer=0;
+        }
+    }
 }
 
 void MainWin::keyPressEvent( QKeyEvent *event )
 {
     char buf[21]={0xfd,0x00,0x12,0x01,0x00,'[','v','0',']','[','x','1',']','s','o','u','n','d','1','0','0'};
-    qDebug()<<"key"<<event->key();
+    //qDebug()<<"key"<<event->key();
 
     if(fd_tts)
     {
@@ -163,10 +172,6 @@ void MainWin::keyPressEvent( QKeyEvent *event )
         case KEY_DOWN:
         case KEY_RIGHT: pnl_info->on_btn_next_clicked();break;
         case KEY_OK: pnl_info->on_btn_view_clicked();break;
-        case KEY_486: pnl_info->rb_show_486(); break;
-        case KEY_518: pnl_info->rb_show_518(); break;
-        case KEY_4209:pnl_info->rb_show_4209(); break;
-        case KEY_DATA:pnl_info->rb_show_all();break;
         }
         break;
     case 3: //panel_about
@@ -177,10 +182,6 @@ void MainWin::keyPressEvent( QKeyEvent *event )
         case KEY_DOWN:
         case KEY_RIGHT: pnl_info->on_btn_next_clicked();break;
         case KEY_OK: pnl_info->on_btn_view_clicked();break;
-        case KEY_486: pnl_info->rb_show_486(); break;
-        case KEY_518: pnl_info->rb_show_518(); break;
-        case KEY_4209:pnl_info->rb_show_4209(); break;
-        case KEY_DATA:pnl_info->rb_show_all();break;
         }
         break;
 
@@ -270,19 +271,9 @@ void MainWin::btnTTSClick(ITEM_DATA *item)
     ba_info.append(info);
     if(fd_tts)
     {
-        qDebug()<<"ba_info.size="<<ba_info.size();
+        //qDebug()<<"ba_info.size="<<ba_info.size();
         ba_info[1]=(ba_info.size()-3)>>8;
         ba_info[2]=(ba_info.size()-3)&0xFF;
-        /*
-         for(int i=0;i<ba_info.size();++i)
-         {
-             if(i%16==0)
-             {
-                 qDebug()<<endl;
-             }
-             fprintf(stderr, "%02x ",ba_info.at(i));
-         }
-         */
         ::write(fd_tts,ba_info,ba_info.size());
     }
 }
@@ -299,28 +290,102 @@ void MainWin::on_stacklayout_currentChanged(int index)
     qDebug()<<"stackedlayout change"<<index;
     if(index==0)
     {
-        (pnl_info->leftlayout->itemAt(navtexitemlist_pos)->widget())->setFocus(Qt::OtherFocusReason);
+       // (pnl_info->leftlayout->itemAt(navtexitemlist_pos)->widget())->setFocus(Qt::OtherFocusReason);
     }
-    if(index==2) //panel_setup
-    {
-        pnl_setup->load_param();
-    }
-
-
-
 }
+
+
+
+
+/*
+分析数据 ZCZC<space>B1B2B3B4<CR><LF><电文>NNNN
+会不会有以下情况
+ZCZC......NNNN  暂时只考虑这种情况,中间有可能夹杂其他无用数据（如回车换行等）
+ZCZC......ZCZC
+NNNN......NNNN
+
+没有频点和误码率？
+*/
+void MainWin::analy_serial_data(QByteArray ba_info)
+{
+    ITEM_DATA *item_data;
+    panel_item *pitem;
+
+    qDebug()<<"******ba_info***********";
+    qDebug()<<ba_info;
+
+    if(ba_serial.at(4)!=' ') return; //格式不对
+    if((ba_serial.at(5)<'A')||(ba_serial.at(5)>'Z')) return;
+    if((ba_serial.at(6)<'A')||(ba_serial.at(6)>'Z')) return;
+    if((ba_serial.at(7)<'0')||(ba_serial.at(7)>'9')) return;
+    if((ba_serial.at(8)<'0')||(ba_serial.at(8)>'9')) return;
+    if(ba_serial.at(9)!=0x0d) return;
+    if(ba_serial.at(10)!=0x0a) return;
+
+
+    item_data = new ITEM_DATA;
+    if(item_data->chn==518)  //英文 日期格式 ddhhmmUTC MMM YYYY  还会有其他格式
+    {
+        //item_data->Broadcast=;              //始发报文时间
+
+    }
+    else   //中文信息格式  YYMMddhhmm
+    {
+
+    }
+
+    item_data->code=QString(ba_serial.mid(5,4));      //技术编码
+    item_data->fRead=1;         //默认未读
+    item_data->BER=0;           //todo:误码率信息如何确认
+    item_data->chn=4209;        //todo:通道信息如何确认
+    item_data->Receive=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm");
+    item_data->Content=QString(ba_info.mid(11));
+    pitem= new panel_item(item_data);
+    itemlist<<pitem;
+    pnl_info->addNavtexItem(pitem);
+
+#if 0
+    QSqlQuery query;
+    query.prepare("INSERT INTO message (:Time,:Type,:Passage,:Latch,:SAR,:Warn,:Read,:BER,:Message,:time_broadcast");
+    query.bindValue(":Time",QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    query.bindValue(":Type",item_data->code);
+    query.bindValue(":Passage",item_data->chn);
+    query.bindValue(":Latch",0);
+    query.bindValue(":SAR",0);
+    query.bindValue(":Warn", 0);
+    query.bindValue(":Read",item_data->fRead);
+    query.bindValue(":BER",item_data->BER);
+    query.bindValue(":Message",item_data->Content);
+    query.bindValue(":time_broadcast",item_data->Broadcast);
+    query.exec();
+#endif
+}
+
 
 
 //串口收到数据
 void MainWin::onReadyRead()
 {
-    QByteArray bytes;
+    QByteArray ba;
+    QByteArray ba_info;
 
-    qDebug() << "bytes read:" << bytes.size();
-    qDebug() << "bytes:" << bytes;
+    int pos_start,pos_end;
     int a = serialport->bytesAvailable();
-    bytes.resize(a);
-    serialport->read(bytes.data(), bytes.size());
+    ba.resize(a);
+    serialport->read(ba.data(), ba.size());
+    ba_serial.append(ba);
+    qDebug() << "serial(" << ba.size()<<")"<< ba;
 
+    while((pos_end=ba_serial.indexOf("NNNN"))!=-1)  //找到结束标志
+    {
+        pos_start=ba_serial.indexOf("ZCZC");
+        if(pos_start>=0)  //找到开始头
+        {
+            ba_info=ba_serial.mid(pos_start,pos_end); //没有包括结束的NNNN
+            analy_serial_data(ba_info);
+        }
+        ba_serial.remove(0,pos_end+5);  //从0开始
+    }
+    qDebug()<<"ba_serial size:"<<ba_serial.size();
 }
 

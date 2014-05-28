@@ -36,6 +36,7 @@ int hinttone=1;
 int hinttone_level=5;
 
 int tts_volume=5;
+int tts_auto=0;
 
 int backlight_keypad=5;
 int backlight_lcd=30;
@@ -117,26 +118,24 @@ void db_init(void)
     }
 
     /*添加数据*/
-    int index=0;
     ITEM_DATA *item_data;
     panel_item *pitem;
     QSqlQuery query;
-    query.exec("select * from Informations");
+    query.exec("select * from message");
     while(query.next())
     {
         item_data = new ITEM_DATA;
         item_data->id = query.value(0).toInt();  //对应数据库的id
+        item_data->Broadcast=query.value(1).toString().mid(0,16);  //只顯示到分钟
         item_data->code=query.value(2).toString();   //技术编码
         item_data->chn=query.value(3).toInt();    //使用通道
-        item_data->Broadcast=query.value(1).toString();
-        item_data->Receive=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-        item_data->Content=query.value(9).toString();
         item_data->fRead=query.value(7).toInt();
         item_data->BER=query.value(8).toInt();
-        //item_data->index=index;
-        pitem= new panel_item(index,item_data);
+        item_data->Content=query.value(9).toString();
+        item_data->Receive=query.value(10).toString().mid(0,16);
+        pitem= new panel_item(item_data);
         itemlist<<pitem;
-//        index++;
+
     }
 }
 
@@ -152,6 +151,7 @@ void config_read(void)
    hinttone_level=cfg->value("hinttone/level",5).toInt();
 
    tts_volume=cfg->value("tts/volume",5).toInt();
+   tts_auto=cfg->value("tts/auto",0).toInt();
 
    backlight_keypad=cfg->value("backlight/keypad",5).toInt();
    backlight_lcd=cfg->value("backlight/lcd",30).toInt();
@@ -160,34 +160,38 @@ void config_read(void)
        ::ioctl(fd_gpio,0x01,backlight_keypad);
        ::ioctl(fd_gpio,0x02,backlight_lcd);
    }
-   qDebug()<<"keytone"<<keytone;
-   qDebug()<<"keytone_level"<<keytone_level;
-   qDebug()<<"hinttone"<<hinttone;
-   qDebug()<<"hinetone_level"<<hinttone_level;
+   //qDebug()<<"keytone"<<keytone;
+   //qDebug()<<"keytone_level"<<keytone_level;
+   //qDebug()<<"hinttone"<<hinttone;
+   //qDebug()<<"hinetone_level"<<hinttone_level;
 
    delete cfg;
 }
 
-void config_write(void)
+void config_write(int writetofile)
 {
-   QSettings *cfg = new QSettings("navtex.ini",QSettings::IniFormat);
+    if(writetofile)
+   {
+        QSettings *cfg = new QSettings("navtex.ini",QSettings::IniFormat);
+        cfg->setValue("keytone/id",keytone);
+        cfg->setValue("keytone/level",keytone_level);
 
-   cfg->setValue("keytone/id",keytone);
-   cfg->setValue("keytone/level",keytone_level);
+        cfg->setValue("hinttone/id",hinttone);
+        cfg->setValue("hinttone/level",hinttone_level);
 
-   cfg->setValue("hinttone/id",hinttone);
-   cfg->setValue("hinttone/level",hinttone_level);
+        cfg->setValue("tts/volume",tts_volume);
+        cfg->setValue("tts/auto",tts_auto);
 
-   cfg->setValue("tts/volume",tts_volume);
-
-   cfg->setValue("backlight/keypad",backlight_keypad);
-   cfg->setValue("backlight/lcd",backlight_lcd);
+        cfg->setValue("backlight/keypad",backlight_keypad);
+        cfg->setValue("backlight/lcd",backlight_lcd);
+        delete cfg;
+    }
    if(fd_gpio)
    {
        ::ioctl(fd_gpio,0x01,backlight_keypad);
        ::ioctl(fd_gpio,0x02,backlight_lcd);
    }
-   delete cfg;
+
 }
 
 

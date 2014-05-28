@@ -14,17 +14,17 @@
 
 panel_info::panel_info(QWidget *parent) : QWidget(parent)
 {
-    setFont(QFont("wenquanyi micro hei mono",20));
+    setFont(QFont("KaiTi",20));
 
     scrollarea=new QScrollArea;
+
     scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    scrollarea->setStyleSheet("min-width: 30px;");
     scrollarea->setWidgetResizable(true);
-    //scrollarea->setContentsMargins(2,0,2,0);
+    scrollarea->setContentsMargins(10,0,10,0);
     scrollwidget=new QWidget(scrollarea);
     scrollarea->setWidget(scrollwidget);
-
-    leftlayout = new FlowLayout(0,5,0);
+    //scrollarea->setStyleSheet("min-width: 30px;");
+    leftlayout = new FlowLayout(10,10,0);
     scrollwidget->setLayout(leftlayout);
 
     lcd_time = new QLCDNumber(8);
@@ -75,7 +75,7 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     rightlayout->addWidget(btn_setup);
     rightlayout->addWidget(btn_about);
     rightlayout->addWidget(btn_exit);
-    rightlayout->setContentsMargins(0,0,0,0);
+    rightlayout->setContentsMargins(5,0,5,0);
 
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showTime()));
@@ -83,9 +83,9 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     showTime();
 
     mainlayout=new QHBoxLayout(parent);
-    mainlayout->addWidget(scrollarea);
-    mainlayout->addLayout(rightlayout);
-    mainlayout->setContentsMargins(0,0,0,0);
+    mainlayout->addWidget(scrollarea,9);
+    mainlayout->addLayout(rightlayout,1);
+    mainlayout->setContentsMargins(2,0,2,0);
     setLayout(mainlayout);
     show();
 }
@@ -115,19 +115,10 @@ void panel_info::clear() const
      while((item=leftlayout->takeAt(0))!=0)
      {
          item->widget()->setParent(NULL);//关键
-         //delete item->widget();  //删除item绑定的Widget
-         //leftlayout->removeWidget(item->widget());
          leftlayout->removeItem(item);
      }
 }
 
-
-void panel_info::serialport_rx(QByteArray bytes)
-{
-    qDebug()<<"panel_info rx:"<<bytes.size();
-    qDebug()<<"bytes:"<<bytes;
-
-}
 
 void panel_info::showTime()
 {
@@ -137,6 +128,18 @@ void panel_info::showTime()
 
 }
 
+void panel_info::addNavtexItem(panel_item * item)
+{
+    if((current_chn==0)||(item->itemvalue->chn==current_chn))
+    {
+        item->index=itemlist.count();
+        leftlayout->addWidget(static_cast<QWidget*>(item));
+    }
+}
+
+
+//更新显示
+//指定通道号 0:全部 486 518 4209
 void panel_info::updateNavtexItemList(int chn)
 {
     panel_item *ppanel_item;
@@ -152,7 +155,7 @@ void panel_info::updateNavtexItemList(int chn)
     timer.start();
 
     clear();
-
+    current_chn=chn;
     int index=0;
     navtexitemlist_pos=0;
     for(item=itemlist.begin();item!=itemlist.end();++item)
@@ -220,11 +223,11 @@ void panel_info::on_btn_about_clicked()
 
 void panel_info::on_btn_exit_clicked()
 {
-  //  QApplication::quit();
-    if(!(QMessageBox::information(this,tr("退出程序"),tr("确定退出程序吗？"),tr("确认"),tr("取消"))))
+    if(!(QMessageBox::information(this,tr("退出程序"),tr("<font size=20>确定退出程序吗？</font>"),tr("确认"),tr("取消"))))
     {
         db_close();
         QApplication::quit();
+        //system("reboot");
     }
 }
 
