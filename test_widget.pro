@@ -4,6 +4,9 @@ QT+=sql
 
 CONFIG += qtestlib
 
+TRANSLATIONS=chn.ts \
+            eng.ts
+
 SOURCES += \
     main.cpp \
     FlowLayout.cpp \
@@ -30,8 +33,7 @@ HEADERS += \
 RESOURCES += \
     res.qrc
 
-FORMS += \
-    panel_item.ui \
-    panel_detail.ui
+FORMS +=
 
 TARGET = navtex
+

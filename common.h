@@ -5,7 +5,7 @@
 #include <QList>
 #include <QMap>
 #include <QWidget>
-
+#include <QTranslator>
 
 #define PIN_KEYPAD_BACKLIGHT (32*1+1)  // S3C2410_GPB1
 #define PIN_LCD_BACKLIGHT (32*6+4)   //S3C2410_GPG4
@@ -61,7 +61,7 @@ extern QList<QWidget *> itemlist;
 extern int navtexitemlist_pos;
 
 extern QString sl_site[];
-extern QString sl_info[];
+extern QStringList sl_info;
 
 extern QMap<QString,QString> qmap_site;
 extern QMap<QString,QString> qmap_infotype;
@@ -86,5 +86,7 @@ void db_close(void);
 void config_read(void);
 void config_write(int writetofile);
 
+
+extern QTranslator *trans;
 
 #endif // NAVTEXITEM_H

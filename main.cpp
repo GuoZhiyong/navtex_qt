@@ -16,6 +16,11 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    trans=new QTranslator();
+    qDebug()<<"load chn.qm "<<trans->load("chn.qm",qApp->applicationDirPath());
+    qApp->installTranslator(trans);
+
+
     fd_tts=::open("/dev/xf5251_drv",O_RDWR);
     if(fd_tts<0)
     {
@@ -34,17 +39,17 @@ int main(int argc, char *argv[])
 
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     //QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GBK"));
+    //QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GBK"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QSplashScreen *splash = new QSplashScreen;
     splash->setPixmap(QPixmap(":/res/navtex.png"));
     splash->show();
     splash->setFont(QFont("ubuntu",16));
-    splash->showMessage(QObject::tr("加载窗体        "),Qt::AlignVCenter|Qt::AlignHCenter,Qt::yellow);
+    splash->showMessage(QObject::tr("Load Window...     "),Qt::AlignVCenter|Qt::AlignHCenter,Qt::yellow);
     MainWin win;
 
     //QTest::qSleep(3000);
-    splash->showMessage(QObject::tr("显示窗体        "),Qt::AlignHCenter|Qt::AlignVCenter,Qt::red);
+    splash->showMessage(QObject::tr("Display Window...     "),Qt::AlignHCenter|Qt::AlignVCenter,Qt::red);
     win.show();
     splash->finish(&win);
     delete splash;

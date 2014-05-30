@@ -1,5 +1,6 @@
 #include "common.h"
 #include <QtSql>
+#include <QObject>
 
 #include <sys/ioctl.h>
 #include <fcntl.h>
@@ -20,9 +21,46 @@ QString sl_site[]={"A","B","C","D","E","F","G",\
                    "H","I","J","K","L","三亚","广州","福州",\
                    "P","上海","大连","S","天津","U","V","W","X","Y","湛江"};
 
-QString sl_info[]={"航行警告","气象警告","冰况报告","搜救信息","气象预报","引航业务信息","船舶自动识别系统",\
-                   "劳兰信息","奥米加信息","卫星导航信息","其它电子导航信息","航行警告(附)","M","N","O",\
-                   "P","Q","渔政信息","S","语音专用信息","U","V","W","X","Y","Z"};
+QString sl_info_chn[]={"航行警告","气象警告","冰况报告","搜救信息","气象预报","引航业务信息","船舶自动识别系统",\
+                       "劳兰信息","奥米加信息","卫星导航信息","其它电子导航信息","航行警告(附)","M","N","O",\
+                       "P","Q","渔政信息","S","语音专用信息","U","V","W","X","Y","Z"};
+
+QString sl_info_eng[]={
+    "Navigational warnings",                            //A
+    "Metrorological warnings",                          //B
+    "Ice reports",                                      //C
+    "Search & rescue information, and pirate warnings", //D
+    "Meteorological forecasts",                         //E
+    "Pilot service messages",                           //F
+    "AIS messages",                                     //G
+    "LORAM messages",                                   //H
+    "Omega messages",                                   //I
+    "SATNAV messages",                                  //J
+    "Other electronic navaid mesages",                  //K
+    "Navigational warnings-additional to letter A",     //L
+    "Not used",                                          //M
+    "Not used",                                          //N
+    "Not used",                                          //O
+    "Not used",                                          //P
+    "Not used",                                          //Q
+    "fishery administration",                           //R
+    "Not used",                                          //S
+    "Test transmissions",                               //T
+    "Not used",                                          //U
+    "Not used",                                          //V
+    "Not used",                                          //W
+    "Not used",                                          //X
+    "Not used",                                          //Y
+    "No message on hand",                               //Z
+};
+
+
+QStringList sl_info;
+
+
+
+
+
 
 QMap<QString,QString> qmap_site;
 QMap<QString,QString> qmap_infotype;
@@ -46,11 +84,39 @@ int backlight_lcd=30;
 int fd_tts=-1; //tts操作
 int fd_gpio=-1;  //gpio操作
 
-
+QTranslator *trans;
 
 //打开数据库
 void db_init(void)
 {
+
+    sl_info<<QObject::tr("Navigational warnings");                     //A
+    sl_info<<QObject::tr("Metrorological warnings");                          //B
+    sl_info<<QObject::tr("Ice reports");                                      //C
+    sl_info<<QObject::tr("Search & rescue information, and pirate warnings"); //D
+    sl_info<<QObject::tr("Meteorological forecasts");                         //E
+    sl_info<<QObject::tr("Pilot service messages");                          //F
+    sl_info<<QObject::tr("AIS messages");                                     //G
+    sl_info<<QObject::tr("LORAM messages");                                   //H
+    sl_info<<QObject::tr("Omega messages");                                   //I
+    sl_info<<QObject::tr("SATNAV messages");                                  //J
+    sl_info<<QObject::tr("Other electronic navaid mesages");                  //K
+    sl_info<<QObject::tr("Navigational warnings-additional to letter A");     //L
+    sl_info<<QObject::tr("Not used");                                          //M
+    sl_info<<QObject::tr("Not used");                                          //N
+    sl_info<<QObject::tr("Not used");                                          //O
+    sl_info<<QObject::tr("Not used");                                          //P
+    sl_info<<QObject::tr("Not used");                                          //Q
+    sl_info<<QObject::tr("fishery administration");                           //R
+    sl_info<<QObject::tr("Not used");                                          //S
+    sl_info<<QObject::tr("Test transmissions");                               //T
+    sl_info<<QObject::tr("Not used");                                          //U
+    sl_info<<QObject::tr("Not used");                                          //V
+    sl_info<<QObject::tr("Not used");                                          //W
+    sl_info<<QObject::tr("Not used");                                          //X
+    sl_info<<QObject::tr("Not used");                                          //Y
+    sl_info<<QObject::tr("No message on hand");                               //Z
+
 
     qmap_site["A"]=QObject::tr("未知岸台");
     qmap_site["B"]=QObject::tr("未知岸台");
@@ -142,36 +208,36 @@ void db_init(void)
 //读取配置信息
 void config_read(void)
 {
-   QSettings *cfg = new QSettings("navtex.ini",QSettings::IniFormat);
+    QSettings *cfg = new QSettings("navtex.ini",QSettings::IniFormat);
 
-   keytone=cfg->value("keytone/id",1).toInt();
-   keytone_level=cfg->value("keytone/level",5).toInt();
+    keytone=cfg->value("keytone/id",1).toInt();
+    keytone_level=cfg->value("keytone/level",5).toInt();
 
-   hinttone=cfg->value("hinttone/id",1).toInt();
-   hinttone_level=cfg->value("hinttone/level",5).toInt();
+    hinttone=cfg->value("hinttone/id",1).toInt();
+    hinttone_level=cfg->value("hinttone/level",5).toInt();
 
-   tts_volume=cfg->value("tts/volume",5).toInt();
-   tts_auto=cfg->value("tts/auto",0).toInt();
+    tts_volume=cfg->value("tts/volume",5).toInt();
+    tts_auto=cfg->value("tts/auto",0).toInt();
 
-   backlight_keypad=cfg->value("backlight/keypad",5).toInt();
-   backlight_lcd=cfg->value("backlight/lcd",30).toInt();
-   if(fd_gpio)
-   {
-       ::ioctl(fd_gpio,0x01,backlight_keypad);
-       ::ioctl(fd_gpio,0x02,backlight_lcd);
-   }
-   //qDebug()<<"keytone"<<keytone;
-   //qDebug()<<"keytone_level"<<keytone_level;
-   //qDebug()<<"hinttone"<<hinttone;
-   //qDebug()<<"hinetone_level"<<hinttone_level;
+    backlight_keypad=cfg->value("backlight/keypad",5).toInt();
+    backlight_lcd=cfg->value("backlight/lcd",30).toInt();
+    if(fd_gpio)
+    {
+        ::ioctl(fd_gpio,0x01,backlight_keypad);
+        ::ioctl(fd_gpio,0x02,backlight_lcd);
+    }
+    //qDebug()<<"keytone"<<keytone;
+    //qDebug()<<"keytone_level"<<keytone_level;
+    //qDebug()<<"hinttone"<<hinttone;
+    //qDebug()<<"hinetone_level"<<hinttone_level;
 
-   delete cfg;
+    delete cfg;
 }
 
 void config_write(int writetofile)
 {
     if(writetofile)
-   {
+    {
         QSettings *cfg = new QSettings("navtex.ini",QSettings::IniFormat);
         cfg->setValue("keytone/id",keytone);
         cfg->setValue("keytone/level",keytone_level);
@@ -186,11 +252,11 @@ void config_write(int writetofile)
         cfg->setValue("backlight/lcd",backlight_lcd);
         delete cfg;
     }
-   if(fd_gpio)
-   {
-       ::ioctl(fd_gpio,0x01,backlight_keypad);
-       ::ioctl(fd_gpio,0x02,backlight_lcd);
-   }
+    if(fd_gpio)
+    {
+        ::ioctl(fd_gpio,0x01,backlight_keypad);
+        ::ioctl(fd_gpio,0x02,backlight_lcd);
+    }
 
 }
 

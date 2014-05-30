@@ -8,17 +8,17 @@ panel_about::panel_about(QWidget *parent) : QWidget(parent)
 {
     setFont(QFont("KaiTi",20));
 
-    btn_ret = new QPushButton(tr("返回"));
+    btn_ret = new QPushButton(tr("Return"));
     QObject::connect(btn_ret,SIGNAL(clicked()),this,SLOT(on_btn_ret_clicked()));
 
-    QLabel *lbl_1= new QLabel(tr("奈伏泰斯(Navtex)接收机"));
-    lbl_1->setAlignment(Qt::AlignHCenter);
-    QLabel *lbl_2= new QLabel(tr("天津七一二通信广播有限公司"));
-    lbl_2->setAlignment(Qt::AlignHCenter);
+    lbl_title= new QLabel(tr("Navtex Receiver"));
+    lbl_title->setAlignment(Qt::AlignHCenter);
+    lbl_company= new QLabel(tr("TianJin 712 Communication & Broadcast Co,Ltd"));
+    lbl_company->setAlignment(Qt::AlignHCenter);
 
     QVBoxLayout * lay_left=new QVBoxLayout();
-    lay_left->addWidget(lbl_1);
-    lay_left->addWidget(lbl_2);
+    lay_left->addWidget(lbl_title);
+    lay_left->addWidget(lbl_company);
 
     QVBoxLayout * lay_right=new QVBoxLayout();
     lay_right->addWidget(btn_ret);
@@ -30,6 +30,33 @@ panel_about::panel_about(QWidget *parent) : QWidget(parent)
     mainlayout->addLayout(lay_right,1);
     setLayout(mainlayout);
 }
+
+
+
+void panel_about::retranslate(QWidget *parent)
+{
+    btn_ret->setText(tr("Return"));
+    lbl_title->setText(tr("Navtex Receiver"));
+    lbl_company->setText(tr("TianJin 712 Communication & Broadcast Co,Ltd"));
+}
+
+
+
+void panel_about::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    switch(e->type())
+    {
+    case QEvent::LanguageChange:
+        retranslate(this);
+        break;
+    default:
+        break;
+    }
+}
+
+
+
 
 panel_about::~panel_about()
 {

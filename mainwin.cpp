@@ -101,7 +101,7 @@ void MainWin::timerEvent( QTimerEvent *event )
             powerkey_timer+=50;
             if(powerkey_timer>=1500) //按下1.5秒 时间有些不准？
             {
-                if(!(QMessageBox::information(this,tr("退出程序"),tr("<font size=20>确定退出程序吗？</font>"),tr("确认"),tr("取消"))))
+                if(!(QMessageBox::information(this,tr("Exit Application"),tr("<font size=20>Confirm to quit?</font>"),tr("  OK  "),tr("CANCLE"))))
                 {
                     db_close();
                     QApplication::quit();
@@ -225,18 +225,42 @@ void MainWin::btnTTSClick(ITEM_DATA *item)
 
     switch(ba[0])
     {
-    case 'M': site=tr("三亚");break;
-    case 'N': site=tr("广州");break;
-    case 'O': site=tr("福州");break;
-    case 'Q': site=tr("上海");break;
-    case 'R': site=tr("大连");break;
-    case 'T': site=tr("天津");break;
-    case 'Z': site=tr("湛江");break;
-    default:site=tr("未知岸播台");break;
+    case 'M': site=tr("SHANYA");break;
+    case 'N': site=tr("GUANGZHOU");break;
+    case 'O': site=tr("FUZHOU");break;
+    case 'Q': site=tr("SHANGHAI");break;
+    case 'R': site=tr("DALIAN");break;
+    case 'T': site=tr("TIANJIN");break;
+    case 'Z': site=tr("ZHENJIANG");break;
+    default:site=tr("UNKONWN SITE");break;
     }
 
+    if((ba[1]>='A')&&(ba[1]<='Z'))
+    {
+        infotype=sl_info[ba[1]-'A'];
+    }
+
+#if 0
     switch(ba[1])
     {
+
+    case 'A':infotype=tr("Navigational warnings");break;
+    case 'B':infotype=tr("Metrorological warnings");break;
+    case 'C':infotype=tr("Ice reports");break;
+    case 'D':infotype=tr("Search & rescue information, and pirate warnings");break;
+    case 'E':infotype=tr("Meteorological forecasts");break;
+    case 'F':infotype=tr("Pilot service messages");break;
+    case 'G':infotype=tr("AIS messages");break;
+    case 'H':infotype=tr("LORAM messages");break;
+    case 'I':infotype=tr("奥米加信息");break;
+    case 'J':infotype=tr("SATNAV messages");break;
+    case 'K':infotype=tr("Other electronic navaid mesages");break;
+    case 'L':infotype=tr("Navigational warnings-additional to letter A");break;
+    case 'R':infotype=tr("渔政信息");break;
+    case 'T':infotype=tr("Test transmissions");break;
+    case 'Z':infotype=tr("No message on hand");break;
+    default:infotype=tr("未知信息");break;
+/*
     case 'A':infotype=tr("航行警告");break;
     case 'B':infotype=tr("气象警告");break;
     case 'C':infotype=tr("冰况报告");break;
@@ -253,7 +277,9 @@ void MainWin::btnTTSClick(ITEM_DATA *item)
     case 'T':infotype=tr("语音专用信息");break;
     case 'Z':infotype=tr("现无电报");break;
     default:infotype=tr("未知信息");break;
+*/
     }
+#endif
 
     QDateTime dt=QDateTime::fromString(item->Broadcast,"yyyy-MM-dd HH:mm:ss");
 
@@ -287,8 +313,8 @@ void MainWin::setStackIndex(int i)
 
 void MainWin::on_stacklayout_currentChanged(int index)
 {
-    qDebug()<<"stackedlayout change"<<index;
-    if(index==0)
+//    qDebug()<<"stackedlayout change"<<index;
+//    if(index==0)
     {
        // (pnl_info->leftlayout->itemAt(navtexitemlist_pos)->widget())->setFocus(Qt::OtherFocusReason);
     }

@@ -37,6 +37,10 @@ public:
 
     FlowLayout *leftlayout;             //主布局管理器，用来访问单个的panel_item
 
+protected:
+    void retranslate(QWidget *parent);
+    void changeEvent(QEvent *e);
+
 public slots:
     void showTime();
 

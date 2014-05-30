@@ -7,6 +7,7 @@ class QPushButton;
 class QGroupBox;
 class QHBoxLayout;
 class QVBoxLayout;
+class QLabel;
 
 class panel_about : public QWidget
 {
@@ -18,7 +19,13 @@ public:
 
 private:
     QPushButton *btn_ret;
+    QLabel *lbl_title;
+    QLabel *lbl_company;
     QHBoxLayout *mainlayout;
+
+protected:
+    void retranslate(QWidget *parent);
+    void changeEvent(QEvent *e);
 
 private slots:
     void on_btn_ret_clicked();

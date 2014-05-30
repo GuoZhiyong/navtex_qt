@@ -8,6 +8,7 @@
 
 
 class QPushButton;
+class QRadioButton;
 class QCheckBox;
 class QComboBox;
 class QGroupBox;
@@ -24,9 +25,24 @@ public:
     ~panel_setup();
 
 private:
+
+    QGroupBox *grp_timeset;
+    QGroupBox *grp_toneset;
+    QGroupBox *grp_system;
+
+
     QPushButton *btn_ret;
     QPushButton *btn_default;
     QPushButton *btn_save;
+
+    QGroupBox *grp_lang;
+    QRadioButton *rb_chn;
+    QRadioButton *rb_eng;
+
+    QLabel *lbl_datetime_title;
+    QLabel *lbl_datetime;
+
+
 
 
     QSpinBox *sb_year;
@@ -39,9 +55,12 @@ private:
     QSpinBox *sb_second;
     QPushButton *btn_settime;
 
+
+    QLabel *lbl_keytone;
     QSpinBox *sb_keytone; //按键音
     QSpinBox *sb_keytone_level; //按键音大小
 
+    QLabel *lbl_hinttone;
     QSpinBox *sb_hinttone; //提示音
     QSpinBox *sb_hinttone_level; //提示音大小
 
@@ -49,15 +68,19 @@ private:
     QCheckBox *cb_autotts;
     QSpinBox *sb_volum;   //音量
     QComboBox *combo_backlight; //背光
+    QLabel *lbl_backlight;
+
 
     QPushButton *btn_db_backup;
     QPushButton *btn_db_export;
     QPushButton *btn_sys_upgrade;
 
-    QLabel *lbl_datetime;
+
 
 protected:
     void timerEvent( QTimerEvent *event );
+    void changeEvent(QEvent *e);
+    void retranslate(QWidget *parent);
     int m_nTimerId;
 
 private slots:
@@ -78,6 +101,8 @@ private slots:
     void on_btn_db_export_clicked();
     void on_btn_sys_upgrade_clicked();
 
+    void on_rb_chn_clicked();
+    void on_rb_eng_clicked();
 
 };
 

@@ -30,20 +30,20 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     lcd_time = new QLCDNumber(8);
     lcd_time->setMinimumHeight(40);
 
-    btn_view = new QPushButton(tr("查看"));
+    btn_view = new QPushButton(tr("View"));
     QObject::connect(btn_view,SIGNAL(clicked()),SLOT(on_btn_view_clicked()));
-    btn_prev = new QPushButton(tr("上一条"));
+    btn_prev = new QPushButton(tr("Prev"));
     QObject::connect(btn_prev,SIGNAL(clicked()),SLOT(on_btn_prev_clicked()));
-    btn_next = new QPushButton(tr("下一条"));
+    btn_next = new QPushButton(tr("Next"));
     QObject::connect(btn_next,SIGNAL(clicked()),SLOT(on_btn_next_clicked()));
 
-    grp_chn  = new QGroupBox(tr("通道显示"));
+    grp_chn  = new QGroupBox(tr("Channel"));
     //grp_chn->setStyleSheet("border: 1px solid lightgray;font-size:16px;");
     grp_chn->setStyleSheet("font-size:18px;");
     rb_486  = new QRadioButton(tr("486KHz"));
     rb_518  = new QRadioButton(tr("518KHz"));
     rb_4209  = new QRadioButton(tr("4209KHz"));
-    rb_all  = new QRadioButton(tr("全部"));
+    rb_all  = new QRadioButton(tr("All"));
     QObject::connect(rb_486,SIGNAL(clicked()),SLOT(rb_show_486()));
     QObject::connect(rb_518,SIGNAL(clicked()),SLOT(rb_show_518()));
     QObject::connect(rb_4209,SIGNAL(clicked()),SLOT(rb_show_4209()));
@@ -56,12 +56,12 @@ panel_info::panel_info(QWidget *parent) : QWidget(parent)
     vbox->addWidget(rb_all);
     grp_chn->setLayout(vbox);
 
-    btn_setup = new QPushButton(tr("设置"));
+    btn_setup = new QPushButton(tr("Setup"));
     QObject::connect(btn_setup,SIGNAL(clicked()),SLOT(on_btn_setup_clicked()));
-    btn_about = new QPushButton(tr("关于"));
+    btn_about = new QPushButton(tr("About"));
     QObject::connect(btn_about,SIGNAL(clicked()),SLOT(on_btn_about_clicked()));
 
-    btn_exit = new QPushButton(tr("退出"));
+    btn_exit = new QPushButton(tr("Exit"));
     QObject::connect(btn_exit,SIGNAL(clicked()),SLOT(on_btn_exit_clicked()));
 
 
@@ -100,6 +100,37 @@ void panel_info::myDrawItem(int index)
     item->repaint();
     item=(panel_item*)(leftlayout->itemAt(navtexitemlist_pos)->widget()); //绘制新的
     item->repaint();
+}
+
+
+void panel_info::retranslate(QWidget *parent)
+{
+    btn_view->setText(tr("View"));
+    btn_prev ->setText(tr("Prev"));
+    btn_next->setText(tr("Next"));
+    grp_chn->setTitle(tr("Channel"));
+    rb_486->setText(tr("486KHz"));
+    rb_518->setText(tr("518KHz"));
+    rb_4209->setText(tr("4209KHz"));
+    rb_all->setText(tr("All"));
+    btn_setup->setText(tr("Setup"));
+    btn_about->setText(tr("About"));
+    btn_exit->setText(tr("Exit"));
+}
+
+
+
+void panel_info::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    switch(e->type())
+    {
+    case QEvent::LanguageChange:
+        retranslate(this);
+        break;
+    default:
+        break;
+    }
 }
 
 
@@ -223,7 +254,7 @@ void panel_info::on_btn_about_clicked()
 
 void panel_info::on_btn_exit_clicked()
 {
-    if(!(QMessageBox::information(this,tr("退出程序"),tr("<font size=20>确定退出程序吗？</font>"),tr("确认"),tr("取消"))))
+    if(!(QMessageBox::information(this,tr("Exit Application"),tr("<font size=20>Confirm to quit?</font>"),tr("  OK  "),tr("CANCLE"))))
     {
         db_close();
         QApplication::quit();
