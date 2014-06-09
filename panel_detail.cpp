@@ -16,10 +16,13 @@ panel_detail::panel_detail(QWidget *parent) : QWidget(parent)
 
     lbl_chn_title = new QLabel(tr("CHAN"));
     lbl_chn = new QLabel();
+
     lbl_ber_title = new QLabel(tr(" BER "));
     lbl_ber = new QLabel();
+
     lbl_broadcast_title= new QLabel(tr("Broadcast"));
     lbl_broadcast = new QLabel();
+
     lbl_receive_title= new QLabel(tr("Receive"));
     lbl_receive = new QLabel();
     btn_ret = new QPushButton(tr("Return"));
@@ -56,6 +59,12 @@ panel_detail::panel_detail(QWidget *parent) : QWidget(parent)
     lbl_info->setStyleSheet("font-size:20px;border-width: 1px; border-style: solid;border-color: rgb(255, 170, 0);");
     layout->addWidget(lbl_info,4,0,1,-1);
 
+    layout->setColumnStretch(0,1);
+    layout->setColumnStretch(1,1);
+    layout->setColumnStretch(2,1);
+    layout->setColumnStretch(3,5);
+    layout->setColumnStretch(4,1);
+
 
     connect(btn_ret,SIGNAL(clicked()),this,SLOT(on_btn_ret_clicked()));
     connect(btn_tts,SIGNAL(clicked()),this,SLOT(on_btn_tts_clicked()));
@@ -69,10 +78,13 @@ void panel_detail::setcontent(ITEM_DATA *i)
     QString str=item->code;
 
     lbl_code->setText(str);
-    lbl_site->setText(qmap_site[str.mid(0,1)]);
-    //lbl_infotype->setText(qmap_infotype[str.mid(1,1)]);
-    lbl_infotype->setText(sl_info[str.at(1).toAscii()-'A']);
+    lbl_chn->setText(QString("%1KHz").arg(item->chn,4,10,QLatin1Char(' ')));
+    lbl_ber->setText(QString(item->BER,10));
+
+    lbl_site->setText(getSite(str.at(0)));
+    lbl_infotype->setText(getInfo(str.at(1)));
     lbl_broadcast->setText(item->Broadcast);
+
     lbl_info->setText(item->Content);
 }
 
@@ -89,12 +101,24 @@ void panel_detail::on_btn_tts_clicked()
 
 void panel_detail::retranslate(QWidget *parent)
 {
-    lbl_chn_title->setText(tr("Channel"));
+
+    lbl_chn_title->setText(tr("CHAN"));
     lbl_ber_title->setText(tr(" BER "));
     lbl_broadcast_title->setText(tr("Broadcast"));
     lbl_receive_title->setText(tr("Receive"));
+   // qDebug()<<"info is "<<getInfo(str.at(1));
+    if(item!=NULL)
+    {
+        QString str=item->code;
+        lbl_infotype->setText(getInfo(str.at(1)));
+        lbl_site->setText(getSite(str.at(0)));
+    }
+//    lbl_infotype->setText(tr(ch));
+
+//    lbl_broadcast->setText(item->Broadcast);
+//    lbl_receive->setText(item->Receive);
     btn_ret->setText(tr("Return"));
-    btn_tts->setText(tr("  TTS  "));
+    btn_tts->setText(tr(" TTS "));
 }
 
 

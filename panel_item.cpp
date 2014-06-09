@@ -60,7 +60,7 @@ panel_item::panel_item(ITEM_DATA *item_data, QWidget *parent) : QWidget(parent)
     btn_tts = new QPushButton();
     btn_tts->setIcon(QIcon(":/res/spk_blue_on.png"));
     btn_tts->setIconSize(QSize(32,32));
-    btn_tts->setStyleSheet(tr("QPushButton:hover{background-color:green;}QPushButton:pressed{background-color:red;}"));
+    btn_tts->setStyleSheet("QPushButton:hover{background-color:green;}QPushButton:pressed{background-color:red;}");
 
 
 

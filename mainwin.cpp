@@ -53,7 +53,7 @@ MainWin::MainWin(QWidget *parent) : QWidget(parent)
     }
     else
     {
-        qDebug()<<tr("串口打开失败")<<endl;
+        qDebug()<<"open serial port error!"<<endl;
     }
 
     QObject::connect(stacklayout,SIGNAL(currentChanged(int)),this,SLOT(on_stacklayout_currentChanged(int)));
@@ -217,73 +217,14 @@ void MainWin::btnViewClick(ITEM_DATA *item)
 
 void MainWin::btnTTSClick(ITEM_DATA *item)
 {
-    QString info;
     QByteArray ba_info;
-    QString site,infotype;
-    QString datetime;
-    QByteArray ba=(item->code).toLatin1();
-
-    switch(ba[0])
-    {
-    case 'M': site=tr("SHANYA");break;
-    case 'N': site=tr("GUANGZHOU");break;
-    case 'O': site=tr("FUZHOU");break;
-    case 'Q': site=tr("SHANGHAI");break;
-    case 'R': site=tr("DALIAN");break;
-    case 'T': site=tr("TIANJIN");break;
-    case 'Z': site=tr("ZHENJIANG");break;
-    default:site=tr("UNKONWN SITE");break;
-    }
-
-    if((ba[1]>='A')&&(ba[1]<='Z'))
-    {
-        infotype=sl_info[ba[1]-'A'];
-    }
-
-#if 0
-    switch(ba[1])
-    {
-
-    case 'A':infotype=tr("Navigational warnings");break;
-    case 'B':infotype=tr("Metrorological warnings");break;
-    case 'C':infotype=tr("Ice reports");break;
-    case 'D':infotype=tr("Search & rescue information, and pirate warnings");break;
-    case 'E':infotype=tr("Meteorological forecasts");break;
-    case 'F':infotype=tr("Pilot service messages");break;
-    case 'G':infotype=tr("AIS messages");break;
-    case 'H':infotype=tr("LORAM messages");break;
-    case 'I':infotype=tr("奥米加信息");break;
-    case 'J':infotype=tr("SATNAV messages");break;
-    case 'K':infotype=tr("Other electronic navaid mesages");break;
-    case 'L':infotype=tr("Navigational warnings-additional to letter A");break;
-    case 'R':infotype=tr("渔政信息");break;
-    case 'T':infotype=tr("Test transmissions");break;
-    case 'Z':infotype=tr("No message on hand");break;
-    default:infotype=tr("未知信息");break;
-/*
-    case 'A':infotype=tr("航行警告");break;
-    case 'B':infotype=tr("气象警告");break;
-    case 'C':infotype=tr("冰况报告");break;
-    case 'D':infotype=tr("搜救信息");break;
-    case 'E':infotype=tr("气象预报");break;
-    case 'F':infotype=tr("引航业务信息");break;
-    case 'G':infotype=tr("船舶自动识别系统");break;
-    case 'H':infotype=tr("劳兰信息");break;
-    case 'I':infotype=tr("奥米加信息");break;
-    case 'J':infotype=tr("卫星导航信息");break;
-    case 'K':infotype=tr("其它电子导航信息");break;
-    case 'L':infotype=tr("航行警告(附)");break;
-    case 'R':infotype=tr("渔政信息");break;
-    case 'T':infotype=tr("语音专用信息");break;
-    case 'Z':infotype=tr("现无电报");break;
-    default:infotype=tr("未知信息");break;
-*/
-    }
-#endif
+    QString info;
+    QString code=item->code;
 
     QDateTime dt=QDateTime::fromString(item->Broadcast,"yyyy-MM-dd HH:mm:ss");
 
-    info= dt.toString(tr("yyyy年M月d日h时m分s秒"))+ site+tr("播发")+infotype+tr("内容如下:")+item->Content;
+    info= dt.toString(tr("yyyy年M月d日h时m分s秒"))+ getSite(code.at(0))+tr("播发")+getInfo(code.at(1))+tr("内容如下:")+item->Content;
+
 
     ba_info.resize(9);
     ba_info[0]=0xFD;

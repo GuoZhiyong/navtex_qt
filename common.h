@@ -60,13 +60,6 @@ extern QList<QWidget *> itemlist;
 
 extern int navtexitemlist_pos;
 
-extern QString sl_site[];
-extern QStringList sl_info;
-
-extern QMap<QString,QString> qmap_site;
-extern QMap<QString,QString> qmap_infotype;
-
-
 extern int fd_tts;
 extern int fd_gpio;
 
@@ -85,6 +78,9 @@ void db_close(void);
 
 void config_read(void);
 void config_write(int writetofile);
+
+QString getSite(QChar B1);
+QString getInfo(QChar B2);
 
 
 extern QTranslator *trans;

@@ -4,8 +4,7 @@ QT+=sql
 
 CONFIG += qtestlib
 
-TRANSLATIONS=chn.ts \
-            eng.ts
+TRANSLATIONS=chn.ts
 
 SOURCES += \
     main.cpp \
